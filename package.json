@@ -10,10 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/AndrewTBurks/json-summary.git"
   },
-  "author": "Andrew Burks",
+  "author": {
+    "name": "Andrew Burks",
+    "url": "https://andrewtburks.dev"
+  },
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/AndrewTBurks/json-summary/issues"
   },
-  "homepage": "https://github.com/AndrewTBurks/json-summary#readme"
+  "homepage": "https://github.com/AndrewTBurks/json-summary#readme",
+  "devDependencies": {
+    "rollup": "^1.9.0"
+  }
 }
