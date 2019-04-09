@@ -10,20 +10,21 @@ body {
 
 #content {
   text-align: left;
+  max-width: 100%;
 }
 
-.title, .data {
+.title {
+  border-bottom: 1px solid var(--solarized-base01);
+}
+
+.title, .data, .code {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.data {
-  white-space: pre-wrap;
-  font-size: 12px;
-}
-
-.data, .summary {
-  min-height: 100px;
+.data, .summary, .code {
+  /* min-height: 100px; */
   width: 400px;
+  max-width: 100%;
 
   padding: 10px 20px;
 
@@ -33,4 +34,61 @@ body {
   border: 1px solid var(--solarized-base01);
 
   border-radius: 5px;
+}
+
+.data,
+.code {
+  font-size: 14px;
+  min-height: unset;
+  color: var(--solarized-base03);
+  color: #000;
+}
+
+.data {
+  background: var(--solarized-base2);
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.data::after {
+  content: "\25B2";
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  transform: rotate(180deg);
+
+  transition: transform 0.5s;
+}
+
+.data:hover {
+  white-space: pre-wrap;
+  max-height: 1000px;
+}
+
+.data:hover::after {
+  transform: rotate(0deg);
+}
+
+.code {
+  white-space: pre-line;
+  color: var(--solarized-base2);
+  background: var(--solarized-base03);
+}
+
+.example {
+  padding: 10px 0;
+
+  border-bottom: 3px solid var(--solarized-base1);
+}
+
+.example h4 {
+  font-size: 16px;
+}
+
+.example p {
+  font-size: 16px;
 }

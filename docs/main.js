@@ -10,14 +10,57 @@ let ex1 = {
   }
 };
 
+let ex2 = {
+  squadName: "Super hero squad",
+  homeTown: "Metro City",
+  formed: 2016,
+  secretBase: "Super tower",
+  active: true,
+  members: [
+    {
+      name: "Molecule Man",
+      age: 29,
+      secretIdentity: "Dan Jukes",
+      powers: ["Radiation resistance", "Turning tiny", "Radiation blast"]
+    },
+    {
+      name: "Madame Uppercut",
+      age: 39,
+      secretIdentity: "Jane Wilson",
+      powers: [
+        "Million tonne punch",
+        "Damage resistance",
+        "Superhuman reflexes"
+      ]
+    },
+    {
+      name: "Eternal Flame",
+      age: 1000000,
+      secretIdentity: "Unknown",
+      powers: [
+        "Immortality",
+        "Heat Immunity",
+        "Inferno",
+        "Teleportation",
+        "Interdimensional travel"
+      ]
+    }
+  ]
+};
+
 let s = new jsonSummary();
 
-let sum1 = s.summarize(ex1);
+addExample(ex1, 1);
+addExample(ex2, 2);
 
-console.log(sum1);
+function addExample(data, number) {
+  let summary = s.summarize(data);
 
-let data1elem = document.getElementById("data1");
-let sum1elem = document.getElementById("summary1");
+  let dataelem = document.getElementById("data" + number);
+  let sumelem = document.getElementById("summary" + number);
+  let outelem = document.getElementById("output" + number);
 
-data1elem.innerHTML = JSON.stringify(ex1, null, ' ');
-sum1elem.innerHTML = s.printSummary(sum1);
+  dataelem.innerHTML = JSON.stringify(data, null, "  ");
+  sumelem.innerHTML = JSON.stringify(summary, null, "  ");
+  outelem.innerHTML = s.printSummary(summary);
+}
