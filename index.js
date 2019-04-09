@@ -121,8 +121,8 @@ const summarizer = (function() {
           let childStringCombined = "\n";
   
           for (let i = 0; i < data.keys.length; i++) {
-            childStringCombined += self.indentation.repeat(
-              (l + 1) * self.indentCount
+            childStringCombined += options.indentation.repeat(
+              (l + 1) * options.indentCount
             );
   
             childStringCombined += wrapInHTML(data.keys[i], "name") + ": ";
@@ -136,7 +136,7 @@ const summarizer = (function() {
             childStringCombined += "\n";
           }
   
-          childStringCombined += self.indentation.repeat(l * self.indentCount);
+          childStringCombined += options.indentation.repeat(l * options.indentCount);
   
           string += wrapInHTML(childStringCombined, "child");
         }
@@ -154,13 +154,13 @@ const summarizer = (function() {
             data.items["0"].type === "Object" || data.items["0"].type === "Array";
   
           if (needsNewlines) {
-            string += "\n" + self.indentation.repeat((l + 1) * self.indentCount);
+            string += "\n" + options.indentation.repeat((l + 1) * options.indentCount);
           }
   
           string += printSummaryLevel(data.items["0"], l + 1);
   
           if (needsNewlines) {
-            string += "\n" + self.indentation.repeat(l * self.indentCount);
+            string += "\n" + options.indentation.repeat(l * options.indentCount);
           }
         }
   
@@ -168,14 +168,13 @@ const summarizer = (function() {
   
         // string = wrapInHTML(string, "layer");
       } else {
-        console.log(data);
         if (data.example == null || data.example == undefined) {
           string += wrapInHTML("?", "type");
         } else {
           string += wrapInHTML(data.type, "type");
         }
   
-        if (self.showExampleValue) {
+        if (options.showExampleValue) {
           string += wrapInHTML(data.example, "value", data.type);
         }
       }
@@ -193,7 +192,7 @@ const summarizer = (function() {
         layer: `<span class="json-summary json-summary-checkbox">
               <input type="checkbox">
               <span class="json-summary-checkboxmarker" onclick="(function(me){
-                me.parentNode.classList.toggle('checked');console.log('click');
+                me.parentNode.classList.toggle('checked');
               })(this)"></span>
             </span><div class="json-summary json-summary-layer">${value}</div>`,
         child: `<div class="json-summary json-summary-child">${value}</div>`,
