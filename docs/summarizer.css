@@ -1,0 +1,148 @@
+.json-summary-wrapper {
+    white-space: pre-wrap;
+}
+
+.json-summary {
+    font-family: monospace;
+}
+
+.json-summary-checkbox {
+  display: inline;
+  position: relative;
+  cursor: pointer;
+  
+  padding-left: 10px;
+  margin-left: 2px;
+  white-space: nowrap;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.json-summary-checkbox>input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.json-summary-checkboxmarker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 12px;
+  height: 12px;
+  width: 12px;
+
+  line-height: 12px;
+  text-align: center;
+
+  color: var(--solarized-base1);
+  border: 1px solid var(--solarized-base1);
+}
+
+.json-summary-checkboxmarker::before {
+    content: "+";
+}
+
+.json-summary-checkbox.checked>.json-summary-checkboxmarker::before {
+    content: "–";
+}
+
+.json-summary-layer {
+    display: inline;
+}
+
+.json-summary-layer>.json-summary-keys {
+    display: none;
+    /* display: inline; */
+    color: var(--solarized-red);
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.json-summary-layer>.json-summary-child {
+    display: none;
+}
+
+.json-summary-checkbox.checked+.json-summary-layer>.json-summary-child {
+    display: inline;
+}
+
+.json-summary-checkbox.checked+.json-summary-layer>.json-summary-keys {
+    display: none;
+}
+
+.json-summary-type {
+    cursor: help;
+    color: var(--solarized-cyan);
+}
+
+.json-summary-type.json-summary-type-string {
+	color: var(--solarized-green);
+}
+
+.json-summary-value {
+    display: none;
+    color: var(--solarized-base01);
+
+    margin-left: 4px;
+    font-style: italic;
+}
+
+.json-summary-value.json-summary-value::before {
+	content: "(";
+}
+
+.json-summary-value.json-summary-value::after {
+	content: ")";
+}
+
+.json-summary-value.json-summary-value-string::before {
+	content: "('";
+}
+
+.json-summary-value.json-summary-value-string::after {
+	content: "')";
+}
+
+.json-summary-type:hover + .json-summary-value {
+    display: inline;
+}
+
+.json-summary-name {
+	color: var(--solarized-red);
+}
+
+.json-summary-length {
+	color: var(--solarized-blue);
+}
+
+.json-summary-circular {
+	color: var(--solarized-violet);
+}
+
+:root {
+    /* using colors from the solarized light theme */
+    --solarized-base03:    #002b36;
+    --solarized-base02:    #073642;
+    --solarized-base01:    #586e75;
+    --solarized-base00:    #657b83;
+    --solarized-base0:     #839496;
+    --solarized-base1:     #93a1a1;
+    --solarized-base2:     #eee8d5;
+    --solarized-base3:     #fdf6e3;
+    --solarized-yellow:    #b58900;
+    --solarized-orange:    #cb4b16;
+    --solarized-red:       #dc322f;
+    --solarized-magenta:   #d33682;
+    --solarized-violet:    #6c71c4;
+    --solarized-blue:      #268bd2;
+    --solarized-cyan:      #2aa198;
+    --solarized-green:     #859900;
+}

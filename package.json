@@ -1,6 +1,6 @@
 {
   "name": "json-summary",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple JSON summarizer to extract the structure from a JSON object",
   "main": "dist/json-summary-node.js",
   "module": "index.js",
@@ -8,7 +8,8 @@
   "browserMin": "dist/json-summary.min.js",
   "scripts": {
     "test": "jest",
-    "prepublish": "npm test && rollup -c"
+    "prepublish": "npm test && npm build",
+    "build": "rollup -c && cp dist/json-summary.min.js docs/json-summary.min.js && cp summarizer.css docs/summarizer.css"
   },
   "repository": {
     "type": "git",
