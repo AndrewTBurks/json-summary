@@ -1,3 +1,6 @@
+# don't push dist, only publish it
+dist/
+
 # Logs
 logs
 *.log

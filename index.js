@@ -92,8 +92,6 @@ const summarizer = (function() {
             unmarkObject(obj[key]);
           }
         }
-      } else {
-        // stop becuase it's unmarked (either a primitive or it's a circular ref already cleared)
       }
     }
   
