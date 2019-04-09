@@ -1,0 +1,32 @@
+body {
+  width: 100%;
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#content {
+  text-align: left;
+}
+
+.data {
+  white-space: pre-wrap;
+  font-size: 12px;
+}
+
+.data, .summary {
+  min-height: 100px;
+  width: 400px;
+
+  padding: 10px 20px;
+
+  margin: 10px;
+
+  background: var(--solarized-base3);
+  border: 1px solid var(--solarized-base01);
+
+  border-radius: 5px;
+}
