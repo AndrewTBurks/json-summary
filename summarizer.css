@@ -1,0 +1,144 @@
+.json-summary {
+    font-family: monospace;
+}
+
+.json-summary-checkbox {
+  display: inline;
+  position: relative;
+  cursor: pointer;
+  
+  padding-left: 10px;
+  margin-left: 2px;
+  white-space: nowrap;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.json-summary-checkbox>input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.json-summary-checkboxmarker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 12px;
+  height: 10px;
+  width: 10px;
+
+  line-height: 10px;
+  text-align: center;
+
+  color: var(--solarized-base1);
+  border: 1px solid var(--solarized-base1);
+}
+
+.json-summary-checkboxmarker::before {
+    content: "+";
+}
+
+.json-summary-checkbox.checked>.json-summary-checkboxmarker::before {
+    content: "–";
+}
+
+.json-summary-layer {
+    display: inline;
+}
+
+.json-summary-layer>.json-summary-keys {
+    display: none;
+    /* display: inline; */
+    color: var(--solarized-red);
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.json-summary-layer>.json-summary-child {
+    display: none;
+}
+
+.json-summary-checkbox.checked+.json-summary-layer>.json-summary-child {
+    display: inline;
+}
+
+.json-summary-checkbox.checked+.json-summary-layer>.json-summary-keys {
+    display: none;
+}
+
+.json-summary-type {
+    cursor: help;
+    color: var(--solarized-cyan);
+}
+
+.json-summary-type.json-summary-type-string {
+	color: var(--solarized-green);
+}
+
+.json-summary-value {
+    display: none;
+    color: var(--solarized-base01);
+
+    margin-left: 4px;
+    font-style: italic;
+}
+
+.json-summary-value.json-summary-value::before {
+	content: "(";
+}
+
+.json-summary-value.json-summary-value::after {
+	content: ")";
+}
+
+.json-summary-value.json-summary-value-string::before {
+	content: "('";
+}
+
+.json-summary-value.json-summary-value-string::after {
+	content: "')";
+}
+
+.json-summary-type:hover + .json-summary-value {
+    display: inline;
+}
+
+.json-summary-name {
+	color: var(--solarized-red);
+}
+
+.json-summary-length {
+	color: var(--solarized-blue);
+}
+
+.json-summary-circular {
+	color: var(--solarized-violet);
+}
+
+:root {
+    /* using colors from the solarized light theme */
+    --summary-base03:    #002b36;
+    --summary-base02:    #073642;
+    --summary-base01:    #586e75;
+    --summary-base00:    #657b83;
+    --summary-base0:     #839496;
+    --summary-base1:     #93a1a1;
+    --summary-base2:     #eee8d5;
+    --summary-base3:     #fdf6e3;
+    --summary-yellow:    #b58900;
+    --summary-orange:    #cb4b16;
+    --summary-red:       #dc322f;
+    --summary-magenta:   #d33682;
+    --summary-violet:    #6c71c4;
+    --summary-blue:      #268bd2;
+    --summary-cyan:      #2aa198;
+    --summary-green:     #859900;
+}
