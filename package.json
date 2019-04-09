@@ -8,7 +8,7 @@
   "browserMin": "dist/json-summary.min.js",
   "scripts": {
     "test": "jest",
-    "prepublish": "npm test && npm build",
+    "prepublish": "npm test && npm run build",
     "build": "rollup -c && cp dist/json-summary.min.js docs/json-summary.min.js && cp summarizer.css docs/summarizer.css"
   },
   "repository": {
