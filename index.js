@@ -1,7 +1,22 @@
 const summarizer = (function() {
-  return function(options = {indentation: " ", // or "\t"
+  return function({
+      indentation =  " ", // or "\t"
+      indentCount = 2,
+      showExampleValue = true,
+      startExpanded = false
+    } = {
+      indentation:  " ", // or "\t"
       indentCount: 2,
-      showExampleValue: true}) {
+      showExampleValue: true,
+      startExpanded: false
+    }) {
+
+    let options = {
+      indentation,
+      indentCount,
+      showExampleValue,
+      startExpanded
+    };
   
     // utility function to extract overall json structure without printing entire data object
     function summarizeJSON(data) {
@@ -189,8 +204,8 @@ const summarizer = (function() {
         name: `<span class="json-summary json-summary-name">${value}</span>`,
         length: `<span class="json-summary json-summary-length">${value}</span>`,
         circular: `<span class="json-summary json-summary-circular">${value}</span>`,
-        layer: `<span class="json-summary json-summary-checkbox">
-              <input type="checkbox">
+        layer: `<span class="json-summary json-summary-checkbox ${options.startExpanded ? "checked" : ""}">
+              <input type="checkbox" ${options.startExpanded ? "checked" : ""}>
               <span class="json-summary-checkboxmarker" onclick="(function(me){
                 me.parentNode.classList.toggle('checked');
               })(this)"></span>
@@ -209,4 +224,4 @@ const summarizer = (function() {
   }
 }());
 
-module.exports = summarizer;
+export default summarizer;

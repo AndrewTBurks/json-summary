@@ -48,19 +48,30 @@ let ex2 = {
   ]
 };
 
-let s = new jsonSummary();
+let ex0 = {
+  a: [2],
+  b: { x: "y" }
+};
 
-addExample(ex1, 1);
-addExample(ex2, 2);
+let summarizer1 = new jsonSummary({startExpanded: true});
 
-function addExample(data, number) {
+let summary = summarizer1.summarize(ex0);
+let sumelem0 = document.getElementById("summary1");
+let outelem0 = document.getElementById("output1");
+sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
+outelem0.innerHTML = summarizer1.printSummary(summary);
+
+addExample(ex1, 2, summarizer1);
+addExample(ex2, 3, summarizer1);
+
+function addExample(data, number, s) {
   let summary = s.summarize(data);
 
   let dataelem = document.getElementById("data" + number);
-  let sumelem = document.getElementById("summary" + number);
+  // let sumelem = document.getElementById("summary" + number);
   let outelem = document.getElementById("output" + number);
 
   dataelem.innerHTML = JSON.stringify(data, null, "  ");
-  sumelem.innerHTML = JSON.stringify(summary, null, "  ");
+  // sumelem.innerHTML = JSON.stringify(summary, null, "  ");
   outelem.innerHTML = s.printSummary(summary);
 }

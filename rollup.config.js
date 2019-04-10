@@ -1,3 +1,5 @@
+// https://github.com/AndrewTBurks/json-summary v0.1.3 Copyright 2019 Andrew Burks
+
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -50,7 +52,7 @@ export default [
     external: ["ms"],
     output: [
       { file: pkg.main, format: "cjs" },
-      { file: pkg.module, format: "es" }
+      // { file: pkg.module, format: "es" }
     ]
   }
 ];

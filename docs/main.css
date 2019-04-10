@@ -14,7 +14,32 @@ body {
 }
 
 .title {
-  border-bottom: 1px solid var(--solarized-base01);
+  color: var(--solarized-base02);
+  text-decoration: underline;
+  /* border-bottom: 2px solid var(--solarized-base02); */
+  font-weight: bolder;
+}
+
+#introtext {
+  max-width: 600px;
+}
+
+a {
+  color: var(--solarized-blue);
+}
+
+a:visited {
+  color: var(--solarized-violet);
+}
+
+h3 {
+  text-decoration: underline;
+}
+
+.links {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .title, .data, .code {
@@ -75,20 +100,30 @@ body {
 
 .code {
   white-space: pre-line;
-  color: var(--solarized-base2);
+  color: var(--solarized-base3);
   background: var(--solarized-base03);
 }
 
-.example {
+.section {
+  display: flex;
+  flex-direction: column;
+
+  align-items: stretch;
+
   padding: 10px 0;
 
-  border-bottom: 3px solid var(--solarized-base1);
+  border-bottom: 1px solid var(--solarized-base1);
+}
+
+.section p {
+  font-size: 14px;
 }
 
 .example h4 {
   font-size: 16px;
 }
 
-.example p {
+.example h5 {
   font-size: 16px;
+  font-weight: normal;
 }

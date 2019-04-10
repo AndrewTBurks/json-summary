@@ -1,4 +1,4 @@
-let JsonSummary = require("./index");
+let JsonSummary = require("./dist/json-summary-node");
 
 let summarizer = new JsonSummary();
 

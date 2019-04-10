@@ -15,36 +15,71 @@
 <body>
   <div>
     <h1 class="title">json-summary</h1>
+    <div class="links">
+      <a href="#usage">Usage</a>
+      <a href="#examples">Examples</a>
+      <a href="https://github.com/AndrewTBurks/json-summary">GitHub</a>
+    </div>
   </div>
   <div id="content">
-    <div class="example">
-      
-      <h4>Raw Data</h4>
-      <div id="data1" class="data"></div>
-      <h4>Summarized JSON</h4>
-      <p>Code:</p>
-      <div id="code1" class="code">let summary = jsonSum.summarize(data);
-        let output = jsonSum.printSummary(summary);
-      </div>
-      <p>Summary:</p>
-      <div id="summary1" class="data"></div>
-      <p>Output:</p>
-      <div id="output1" class="summary json-summary-wrapper"></div>
-    
+    <h3 id="intro">Intro</h3>
+    <div id="introtext">
+      <span style="font-weight: bold; font-family: 'Courier New', Courier, monospace">json-summary</span> was created to simplify the display of complex data to users.
+      <br><br>
+      The module attempts to extract important structural information from a JSON object in order to only show users the most important information relevant to their development.
+      Among its benefits:
+      <ul>
+        <li>Removes repetitive information in datasets (e.g. long arrays)</li>
+        <li>Smaller representation is better for interface and large datasets on a server</li>
+      </ul>
     </div>
-    <div class="example">
+    <h3 id="usage">Usage</h3>
+    <div class="section">
+      <h4>Adding to your project:</h4>
+      <div class="code">&lt;link rel="stylesheet" href="https://unpkg.com/json-summary@0.1.3/summarizer.css"&gt;
 
+&lt;script src="https://unpkg.com/json-summary@0.1.3/dist/json-summary.min.js"&gt;
+      </div>
+      <h4>Creation:</h4>
+      <div class="code">let jsonSum = new jsonSummary();</div>
+
+      <h4>Creation (with default options):</h4>
+      <div class="code" style="white-space:pre-wrap;">let jsonSum = new jsonSummary({
+  indentation: " ",
+  indentCount: 2,
+  showExampleValue: true,
+  startExpanded: false
+});</div>
+
+      <h4>Summarizing:</h4>
+      <div class="code" style="white-space:pre-wrap;">let data = {
+  a: [2],
+  b: {x: "y"}
+};
+
+let summary = jsonSum.summarize(data);
+let output = jsonSum.printSummary(summary);</div>
+      <h4>Summary Information <span style="font-family:'Courier New', Courier, monospace">(summary)</span></h4>
+      <div id="summary1" class="data"></div>
+      <h4>Interactive Summary <span style="font-family:'Courier New', Courier, monospace">(output)</span></h4>
+      <div id="output1" class="summary json-summary-wrapper"></div>
+
+
+    </div>
+
+    <h3 id="examples">More Examples</h3>
+    <div class="section example">
       <h4>Raw Data</h4>
       <div id="data2" class="data"></div>
-      <h4>Summarized JSON</h4>
-      <p>Code:</p>
-      <div id="code2" class="code">let summary = jsonSum.summarize(data);
-        let output = jsonSum.printSummary(summary);
-      </div>
-      <p>Summary:</p>
-      <div id="summary2" class="data"></div>
-      <p>Interactive Output:</p>
+      <h4>Interactive Summary</h4>
       <div id="output2" class="summary json-summary-wrapper"></div>
+    
+    </div>
+    <div class="section example">
+      <h4>Raw Data</h4>
+      <div id="data3" class="data"></div>
+      <h4>Interactive Summary</h4>
+      <div id="output3" class="summary json-summary-wrapper"></div>
 
     </div>
   </div>
