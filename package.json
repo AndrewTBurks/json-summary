@@ -1,6 +1,6 @@
 {
   "name": "json-summary",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A simple JSON summarizer to extract the structure from a JSON object",
   "main": "dist/json-summary-node.js",
   "module": "index.js",
