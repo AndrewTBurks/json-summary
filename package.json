@@ -13,7 +13,7 @@
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest && codecov",
     "prepublish": "npm run build && npm test",
     "build": "rollup -c && cp dist/json-summary.min.js docs/json-summary.min.js && cp summarizer.css docs/summarizer.css"
   },
@@ -31,11 +31,16 @@
   },
   "homepage": "https://andrewtburks.dev/json-summary",
   "devDependencies": {
+    "codecov": "^3.3.0",
     "jest": "^24.7.1",
     "rollup": "^1.9.0",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.1",
     "rollup-plugin-resolve": "0.0.1-predev.1",
     "rollup-plugin-terser": "^4.0.4"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }
