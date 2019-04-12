@@ -1,7 +1,7 @@
 let ex1 = {
   "key1": "val1",
   "key2": [
-    "a", "b", "c"
+    {"a": 1}, {a: 6, "b": 2}, {"c": 3}
   ],
   "key3": true,
   "key4": {
@@ -62,7 +62,7 @@ sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
 outelem0.innerHTML = summarizer1.printSummary(summary);
 
 addExample(ex1, 2, summarizer1);
-addExample(ex2, 3, summarizer1);
+// addExample(ex2, 3, summarizer1);
 
 function addExample(data, number, s) {
   let summary = s.summarize(data);

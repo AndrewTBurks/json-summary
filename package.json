@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest && codecov",
     "prepublish": "npm run build && npm test",
-    "build": "rollup -c && cp dist/json-summary.min.js docs/json-summary.min.js && cp summarizer.css docs/summarizer.css"
+    "build": "rollup -c && cp dist/json-summary.js docs/json-summary.js && cp summarizer.css docs/summarizer.css"
   },
   "repository": {
     "type": "git",
