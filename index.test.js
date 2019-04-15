@@ -107,3 +107,22 @@ test("handles circular reference", () => {
     type: "Object"
   });
 });
+
+test("handles empty array", () => {
+  let object = {
+    a: []
+  };
+
+  let summary = summarizer.summarize(object);
+
+  expect(summary).toEqual({
+    items: {
+      "a": {
+        length: 0,
+        type: "Array"
+      }
+    },
+    keys: ["a"],
+    type: "Object"
+  });
+});
