@@ -37,50 +37,59 @@ const summarizer = (function() {
     function summarizeItem(item) {
       let summarize = {
         Array: arr => {
-          let summarized = {};
+          let summarized = {
+            count: 1,
+            type: "Array",
+            length: arr.length
+          };
   
-          summarized.type = "Array";
-          summarized.length = arr.length;
-
           // recurse to items in the array
           if (arr.length) {
-            let numToSample = Math.min(arraySampleCount, arr.length);
-            let sampledItems = {};
-  
-            while (numToSample > 0) {
-              let sampleIndex = Math.floor(Math.random() * arr.length);
-  
-              if (!sampledItems[sampleIndex]) {
-                sampledItems[sampleIndex] = arr[sampleIndex];
-                numToSample--;
+            if (arraySampleCount > 0) {
+              let numToSample = Math.min(arraySampleCount, arr.length);
+              let sampledItems = {};
+
+              // summarized.count = numToSample;
+    
+              while (numToSample > 0) {
+                let sampleIndex = Math.floor(Math.random() * arr.length);
+    
+                if (!sampledItems[sampleIndex]) {
+                  sampledItems[sampleIndex] = arr[sampleIndex];
+                  numToSample--;
+                }
               }
-            }
-  
-            let summarizedSamples = [];
-  
-            for (let [idx, item] of Object.entries(sampledItems)) {
-              summarizedSamples.push(summarizeItem(item));
-            }
-  
-            let joinedSample = joinSampledArray(summarizedSamples);
+    
+              let summarizedSamples = [];
+    
+              for (let [idx, item] of Object.entries(sampledItems)) {
+                summarizedSamples.push(summarizeItem(item));
+              }
+    
+              let joinedSample = joinSampledArray(summarizedSamples);
 
-            console.log(joinedSample);
+              summarized.items = {
+                0: joinedSample
+              };
+            } else {
+              // sumamrized.count = 1;
+              summarized.items = {
+                0: summarizeItem(arr[0])
+              };
+            }
 
-            summarized.items = {
-              0: joinedSample
-            };
           }
   
           return summarized;
         },
         Object: obj => {
-          let summarized = {};
-  
-          summarized.type = "Object";
-          summarized.keys = Object.keys(obj);
-  
-          summarized.items = {};
-  
+          let summarized = {
+            count: 1,
+            type: "Object",
+            keys: Object.keys(obj),
+            items: {}
+          };
+
           for (let key of summarized.keys) {
             summarized.items[key] = summarizeItem(obj[key]);
           }
@@ -134,8 +143,6 @@ const summarizer = (function() {
     }
   
     function joinSampledArray(itemset) {
-      console.log("joinSampledArray", itemset);
-
       // let type = itemset.map(d => d.type)
       //   .reduce((a, type) => {
       //     a[type] = [];
@@ -163,8 +170,7 @@ const summarizer = (function() {
     }
 
     function joinItems(itemArr, type) {
-      console.log("joinItems", itemArr, type);
-
+      // functions to join items by type
       let joiner = {
         string: function(items) {
           // string length range
@@ -182,8 +188,6 @@ const summarizer = (function() {
             range: [min, max],
             count: items.reduce((a, i) => a + i.count, 0)
           };
-
-          console.log(joinedString);
 
           return joinedString;
         },
@@ -203,8 +207,6 @@ const summarizer = (function() {
             count: items.reduce((a, i) => a + i.count, 0)
           };
 
-          console.log(joinedNumber);
-
           return joinedNumber;
         },
         boolean: function(items) {
@@ -216,13 +218,14 @@ const summarizer = (function() {
         },
         Object: function(items) {
           let masterKeys = {};
-          console.log("join objects", items);
 
           for (let obj of items) {
-            for (let key of obj.keys) {
-              !masterKeys[key] && (masterKeys[key] = []);
+            if (!obj.circular) {
+              for (let key of obj.keys) {
+                !masterKeys[key] && (masterKeys[key] = []);
 
-              masterKeys[key].push(obj.items[key]);
+                masterKeys[key].push(obj.items[key]);
+              }
             }
           }
 
@@ -237,13 +240,18 @@ const summarizer = (function() {
           return joinedObject;
         },
         Array: function(items) {
-          console.log("join arrays", items);
+          let joinedValues = joinSampledArray(items.map(i => i.items[0]));
 
-          let joinedArrays = joinSampledArray(items.map(i => i.items[0]));
+          let joinedArray = {
+            count: items.length,
+            items: {
+              0: joinedValues
+            },
+            length: joinedValues.count / items.length,
+            type: "Array"
+          };
 
-          console.log(joinedArrays);
-
-          return joinedArrays;
+          return joinedArray;
         }
       };
 
@@ -268,10 +276,10 @@ const summarizer = (function() {
     // utility function to stringify the summary output from summarizeJSON
     function printSummarizedJSON(summary) {
       // start at 0 indentation
-      return printSummaryLevel(summary, 0);
+      return printSummaryLevel(summary, 0, 1);
     }
   
-    function printSummaryLevel(data, l) {
+    function printSummaryLevel(data, l, prevCount) {
       let string = "";
   
       if (data.circular) {
@@ -284,7 +292,7 @@ const summarizer = (function() {
         string += wrapInHTML(keys, "keys");
   
         let childStrings = data.keys.map(key => {
-          return printSummaryLevel(data.items[key], l + 1);
+          return printSummaryLevel(data.items[key], l + 1, data.count);
         });
   
         if (childStrings.length) {
@@ -296,6 +304,10 @@ const summarizer = (function() {
             );
   
             childStringCombined += wrapInHTML(data.keys[i], "name") + ": ";
+
+            if (data.count > 1) {
+              childStringCombined += htmlPercentageBar(data.items[data.keys[i]].count / data.count * 100);
+            }
   
             childStringCombined += childStrings[i];
   
@@ -317,8 +329,8 @@ const summarizer = (function() {
       } else if (data.type === "Array") {
         // string += "[]";
         // string += `[ ${data.length ? `(${data.length}×)` : "∅"} `;
-        string += wrapInHTML(`(${data.length})`, "length") + ` [`;
-  
+        string += wrapInHTML(data.count > 1 ? "μ = " + data.length.toFixed(1) : data.length, "length") + ` [`;
+
         if (data.length) {
           let needsNewlines =
             data.items["0"].type === "Object" || data.items["0"].type === "Array";
@@ -327,7 +339,7 @@ const summarizer = (function() {
             string += "\n" + options.indentation.repeat((l + 1) * options.indentCount);
           }
   
-          string += printSummaryLevel(data.items["0"], l + 1);
+          string += printSummaryLevel(data.items["0"], l + 1, data.count);
   
           if (needsNewlines) {
             string += "\n" + options.indentation.repeat(l * options.indentCount);
@@ -346,6 +358,7 @@ const summarizer = (function() {
   
         if (options.showExampleValue) {
           string += wrapInHTML(data.example, "value", data.type);
+          data.count > 1 && data.range && (string += wrapInHTML(data.range, "range", data.type));
         }
       }
   
@@ -356,11 +369,16 @@ const summarizer = (function() {
       let tags = {
         type: `<span class="json-summary json-summary-type json-summary-type-${value}">&lt;${value}&gt;</span>`,
         value: `<span class="json-summary json-summary-value json-summary-value-${type}">${value}</span>`,
+        range: `<span class="json-summary json-summary-range json-summary-range-${type}">[${value[0]}, ${value[1]}]</span>`,
         name: `<span class="json-summary json-summary-name">${value}</span>`,
-        length: `<span class="json-summary json-summary-length">${value}</span>`,
+        length: `<span class="json-summary json-summary-length">(${value})</span>`,
         circular: `<span class="json-summary json-summary-circular">${value}</span>`,
-        layer: `<span class="json-summary json-summary-checkbox ${options.startExpanded ? "checked" : ""}">
-              <input type="checkbox" ${options.startExpanded ? "checked" : ""}>
+        layer: `<span class="json-summary json-summary-checkbox ${
+          options.startExpanded ? "checked" : ""
+        }">
+              <input type="checkbox" ${
+                options.startExpanded ? "checked" : ""
+              }>
               <span class="json-summary-checkboxmarker" onclick="(function(me){
                 me.parentNode.classList.toggle('checked');
               })(this)"></span>
@@ -370,6 +388,10 @@ const summarizer = (function() {
       };
   
       return tags[role];
+    }
+
+    function htmlPercentageBar(percentage) {
+      return `<div class="json-summary json-summary-bar"><div class="json-summary json-summary-percentage" style="width:${percentage}%;"></div></div>`
     }
   
     return {

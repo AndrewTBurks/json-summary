@@ -62,7 +62,12 @@ sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
 outelem0.innerHTML = summarizer1.printSummary(summary);
 
 addExample(ex1, 2, summarizer1);
-// addExample(ex2, 3, summarizer1);
+addExample(ex2, 3, summarizer1);
+
+
+console.time("stringify");
+let str = JSON.stringify(ex2, null, "  ");
+console.timeEnd("stringify");
 
 function addExample(data, number, s) {
   let summary = s.summarize(data);
