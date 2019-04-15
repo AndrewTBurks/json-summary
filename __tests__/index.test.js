@@ -1,13 +1,22 @@
-let JsonSummary = require("./index");
+let JsonSummary = require("../index");
 
-let summarizer = new JsonSummary({arraySampleCount: 0});
+let summarizerNoSample = new JsonSummary({arraySampleCount: 0});
+let summarizerSampled = new JsonSummary({ arraySampleCount: 5 });
 
 test("handles string", () => {
   let object = "Test";
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
+  let summary2 = summarizerSampled.summarize(object);
 
   expect(summary).toEqual({
+    "example": "Test",
+    "type": "string",
+    "count": 1,
+    "range": [4, 4]
+  });
+
+  expect(summary2).toEqual({
     "example": "Test",
     "type": "string",
     "count": 1,
@@ -18,7 +27,7 @@ test("handles string", () => {
 test("handles number", () => {
   let object = 20.2;
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     example: 20.2,
@@ -31,7 +40,7 @@ test("handles number", () => {
 test("handles boolean", () => {
   let object = true;
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     count: 1,
@@ -43,7 +52,7 @@ test("handles boolean", () => {
 test("handles null", () => {
   let object = null;
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     count: 1,
@@ -55,7 +64,7 @@ test("handles null", () => {
 test("handles undefined", () => {
   let object = undefined;
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     count: 1,
@@ -67,7 +76,7 @@ test("handles undefined", () => {
 test("handles array", () => {
   let object = ["a", "b", "c"];
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     count: 1,
@@ -87,7 +96,7 @@ test("handles array", () => {
 test('handles object', () => {
   let object = { a: 1 };
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     "count": 1,
@@ -101,7 +110,7 @@ test("handles circular reference", () => {
   let object = {"x": 1};
   object.y = object;
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     count: 1,
@@ -127,7 +136,7 @@ test("handles empty array", () => {
     a: []
   };
 
-  let summary = summarizer.summarize(object);
+  let summary = summarizerNoSample.summarize(object);
 
   expect(summary).toEqual({
     count: 1,

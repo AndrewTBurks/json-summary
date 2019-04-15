@@ -156,7 +156,9 @@
 
     background: var(--solarized-base3);
     border: 1px solid var(--solarized-base01);
-    /* overflow: hidden; */
+    overflow: hidden;
+
+    border-radius: 0 2px 2px 0;
 }
 
 .json-summary-percentage {
@@ -169,6 +171,7 @@
     background: var(--solarized-cyan);
     /* border: solid var(--solarized-cyan);
     border-width: 0 1px 0 1px; */
+    /* border-radius: 0 2px 2px 0; */
 }
 
 :root {
