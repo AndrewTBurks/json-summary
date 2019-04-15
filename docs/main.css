@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   width: 100%;
   margin: 0;
@@ -11,7 +15,9 @@ body {
 
 #content {
   text-align: left;
+  width: 600px;
   max-width: 100%;
+  padding: 20px;
 }
 
 .title {
@@ -21,9 +27,9 @@ body {
   font-weight: bolder;
 }
 
-#introtext {
-  max-width: 600px;
-}
+/* #introtext {
+  max-width: 100;
+} */
 
 a {
   color: var(--solarized-blue);
@@ -49,8 +55,9 @@ h3 {
 
 .data, .summary, .code {
   /* min-height: 100px; */
-  width: 400px;
-  max-width: 100%;
+  /* width: 400px; */
+  width: 100%;
+  /* min-width: 400px; */
 
   padding: 10px 20px;
 
@@ -127,4 +134,15 @@ h3 {
 .example h5 {
   font-size: 16px;
   font-weight: normal;
+}
+
+#option-table {
+
+}
+#option-table td {
+  padding: 2px 5px;
+}
+
+.table-header th {
+  border-bottom: 1px solid black;
 }

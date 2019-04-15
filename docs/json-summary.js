@@ -1,4 +1,4 @@
-// https://andrewtburks.dev/json-summary v0.1.6 Copyright 2019 Andrew Burks
+// https://andrewtburks.dev/json-summary v0.2.0 Copyright 2019 Andrew Burks
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
@@ -61,18 +61,18 @@ const summarizer = (function() {
               while (numToSample > 0) {
                 let sampleIndex = Math.floor(Math.random() * arr.length);
     
-                if (!sampledItems[sampleIndex]) {
+                if (!sampledItems.hasOwnProperty(sampleIndex)) {
                   sampledItems[sampleIndex] = arr[sampleIndex];
                   numToSample--;
                 }
               }
-    
+
               let summarizedSamples = [];
-    
+
               for (let [idx, item] of Object.entries(sampledItems)) {
                 summarizedSamples.push(summarizeItem(item));
               }
-    
+
               let joinedSample = joinSampledArray(summarizedSamples);
 
               summarized.items = {

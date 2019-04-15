@@ -1,6 +1,6 @@
 {
   "name": "json-summary",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "A simple JSON summarizer to extract the structure from a JSON object",
   "keywords": [
     "JSON",
@@ -33,7 +33,6 @@
   "homepage": "https://andrewtburks.dev/json-summary",
   "devDependencies": {
     "coveralls": "^3.0.3",
-    "esm": "^3.2.22",
     "jest": "^24.7.1",
     "rollup": "^1.9.0",
     "rollup-plugin-commonjs": "^9.3.4",
