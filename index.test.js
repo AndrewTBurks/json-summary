@@ -1,4 +1,4 @@
-let JsonSummary = require("./dist/json-summary-node");
+let JsonSummary = require("./index");
 
 let summarizer = new JsonSummary();
 
@@ -104,6 +104,25 @@ test("handles circular reference", () => {
       }
     },
     keys: ["x", "y"],
+    type: "Object"
+  });
+});
+
+test("handles empty array", () => {
+  let object = {
+    a: []
+  };
+
+  let summary = summarizer.summarize(object);
+
+  expect(summary).toEqual({
+    items: {
+      "a": {
+        length: 0,
+        type: "Array"
+      }
+    },
+    keys: ["a"],
     type: "Object"
   });
 });
