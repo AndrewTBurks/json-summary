@@ -7,16 +7,8 @@ test("handles string", () => {
   let object = "Test";
 
   let summary = summarizerNoSample.summarize(object);
-  let summary2 = summarizerSampled.summarize(object);
 
   expect(summary).toEqual({
-    "example": "Test",
-    "type": "string",
-    "count": 1,
-    "range": [4, 4]
-  });
-
-  expect(summary2).toEqual({
     "example": "Test",
     "type": "string",
     "count": 1,
@@ -74,18 +66,33 @@ test("handles undefined", () => {
 });
 
 test("handles array", () => {
-  let object = ["a", "b", "c"];
+  let object = ["apple", "banana", "canteloupe"];
 
   let summary = summarizerNoSample.summarize(object);
+  let summary2 = summarizerSampled.summarize(object);
 
   expect(summary).toEqual({
     count: 1,
     items: {
       0: {
         count: 1,
-        example: "a",
+        example: "apple",
         type: "string",
-        range: [1, 1]
+        range: [5, 5]
+      }
+    },
+    length: 3,
+    type: "Array"
+  });
+
+  expect(summary2).toEqual({
+    count: 1,
+    items: {
+      0: {
+        count: 3,
+        example: "apple",
+        type: "string",
+        range: [5, 10]
       }
     },
     length: 3,
@@ -150,4 +157,71 @@ test("handles empty array", () => {
     keys: ["a"],
     type: "Object"
   });
+});
+
+// does sampling using length 5 array so it is consistent
+
+test("handles sampling string", () => {
+  let object = ["apple", "orange", "pear", "kiwi", "canteloupe"];
+
+  let summary = summarizerSampled.summarize(object);
+
+  let expected = {
+    count: 1,
+    type: "Array",
+    length: 5,
+    items: {
+      0: {
+        count: 5,
+        example: expect.any(String),
+        type: "string",
+        range: [4, 10]
+      }
+    }
+  };
+
+  expect(summary).toMatchObject(expected);
+});
+
+test("handles sampling number", () => {
+  let object = [18.5, 26.9, 69.69, 80.1, 99.9];
+
+  let summary = summarizerSampled.summarize(object);
+
+  let expected = {
+    count: 1,
+    type: "Array",
+    length: 5,
+    items: {
+      0: {
+        example: expect.any(Number),
+        type: "number",
+        count: 5,
+        range: [18.5, 99.9]
+      }
+    }
+  };
+
+  expect(summary).toMatchObject(expected);
+});
+
+test("handles sampling boolean", () => {
+  let object = [true, false, false, true, true];
+
+  let summary = summarizerSampled.summarize(object);
+
+  let expected = {
+    count: 1,
+    type: "Array",
+    length: 5,
+    items: {
+      0: {
+        count: 5,
+        example: expect.any(Boolean),
+        type: "boolean"
+      }
+    }
+  };
+
+  expect(summary).toMatchObject(expected);
 });

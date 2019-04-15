@@ -54,18 +54,18 @@ const summarizer = (function() {
               while (numToSample > 0) {
                 let sampleIndex = Math.floor(Math.random() * arr.length);
     
-                if (!sampledItems[sampleIndex]) {
+                if (!sampledItems.hasOwnProperty(sampleIndex)) {
                   sampledItems[sampleIndex] = arr[sampleIndex];
                   numToSample--;
                 }
               }
-    
+
               let summarizedSamples = [];
-    
+
               for (let [idx, item] of Object.entries(sampledItems)) {
                 summarizedSamples.push(summarizeItem(item));
               }
-    
+
               let joinedSample = joinSampledArray(summarizedSamples);
 
               summarized.items = {
@@ -211,7 +211,7 @@ const summarizer = (function() {
         },
         boolean: function(items) {
           return {
-            type: "number",
+            type: "boolean",
             example: items[0].example,
             count: items.reduce((a, i) => a + i.count, 0)
           };

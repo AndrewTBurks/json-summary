@@ -218,7 +218,7 @@ const summarizer = (function() {
         },
         boolean: function(items) {
           return {
-            type: "number",
+            type: "boolean",
             example: items[0].example,
             count: items.reduce((a, i) => a + i.count, 0)
           };
