@@ -8,11 +8,12 @@
     "object",
     "summary"
   ],
-  "main": "dist/json-summary-node.js",
-  "module": "index.js",
+  "main": "index.js",
+  "module": "dist/json-summary.esm.js",
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
   "scripts": {
+    "jest": "jest",
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "prepublish": "npm run build && npm test",
     "build": "rollup -c && cp dist/json-summary.min.js docs/json-summary.min.js && cp summarizer.css docs/summarizer.css"
@@ -32,6 +33,7 @@
   "homepage": "https://andrewtburks.dev/json-summary",
   "devDependencies": {
     "coveralls": "^3.0.3",
+    "esm": "^3.2.22",
     "jest": "^24.7.1",
     "rollup": "^1.9.0",
     "rollup-plugin-commonjs": "^9.3.4",

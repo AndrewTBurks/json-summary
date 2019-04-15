@@ -224,4 +224,4 @@ const summarizer = (function() {
   }
 }());
 
-export default summarizer;
+module.exports = summarizer;

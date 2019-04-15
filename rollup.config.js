@@ -51,8 +51,8 @@ export default [
     input: "index",
     external: ["ms"],
     output: [
-      { file: pkg.main, format: "cjs" },
-      // { file: pkg.module, format: "es" }
+      // { file: pkg.main, format: "cjs" },
+      { file: pkg.module, format: "esm", banner: copyright }
     ]
   }
 ];
