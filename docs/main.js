@@ -1,7 +1,7 @@
 let ex1 = {
   "name": "val1",
   "data": [
-    {"a": 1}, {a: 6, "b": 2}, {"c": 3}
+    {"a": 1}, {a: 6, "b": 2}, {b: null, "c": 3}
   ],
   "isOk": true,
   "location": {
@@ -100,7 +100,8 @@ Dropzone.options.upload = {
 
         outElem.innerHTML = sum.printSummary(summary);
       } catch (err) {
-        console.log("error parsing JSON");
+        console.log("error parsing and summarizing JSON");
+        console.error(err);
       }
     };
     reader.onerror = function(evt) {
