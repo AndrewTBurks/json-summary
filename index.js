@@ -78,6 +78,10 @@ const summarizer = (function() {
               };
             }
 
+          } else {
+            summarized.items = {
+              0: undefined
+            };
           }
   
           return summarized;
@@ -172,8 +176,10 @@ const summarizer = (function() {
         let type = items[0].type;
         return joinItems(items.filter(i => i.type === type), type);
       } else {
-        // idk
-        return {};
+        // idk - no items to join?
+        return {
+          count: 0
+        };
       }
 
     }
@@ -251,7 +257,7 @@ const summarizer = (function() {
           return joinedObject;
         },
         Array: function(items) {
-          let joinedValues = joinSampledArray(items.map(i => i.items[0]));
+          let joinedValues = joinSampledArray(items.map(i => i.items[0]).filter(i => i));
 
           let joinedArray = {
             count: items.length,

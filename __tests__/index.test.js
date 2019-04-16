@@ -151,6 +151,9 @@ test("handles empty array", () => {
       a: {
         count: 1,
         length: 0,
+        items: {
+          0: undefined
+        },
         type: "Array"
       }
     },
@@ -228,11 +231,11 @@ test("handles sampling boolean", () => {
 
 test("handles sampling array", () => {
   let object = [
-    [1],
+    [],
     [2, 3],
     [4, 5, 6],
     [7, 8],
-    [9]
+    [1]
   ];
 
   let summary = summarizerSampled.summarize(object);
@@ -245,12 +248,12 @@ test("handles sampling array", () => {
       0: {
         count: 5,
         type: "Array",
-        length: 1.8,
+        length: 1.6,
         items: {
           0: {
             type: "number",
-            count: 9,
-            range: [1, 9],
+            count: 8,
+            range: [1, 8],
             example: expect.any(Number)
           }
         }
