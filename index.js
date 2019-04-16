@@ -408,7 +408,7 @@ const summarizer = (function() {
     }
 
     function htmlPercentageBar(percentage) {
-      return `<div class="json-summary json-summary-bar"><div class="json-summary json-summary-percentage" style="width:${percentage}%;"></div></div>`
+      return `<div class="json-summary json-summary-bar" title="${percentage.toFixed(2)}%"><div class="json-summary json-summary-percentage" style="width:${percentage}%;"></div></div>`
     }
   
     return {

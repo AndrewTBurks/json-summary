@@ -109,3 +109,12 @@ Dropzone.options.upload = {
     };
   }
 };
+
+// bind interaction with data blocks
+let dataBlocks = document.getElementsByClassName("data");
+
+for (let i = 0; i < dataBlocks.length; i++) {
+  dataBlocks[i].onclick = function() {
+    this.classList.toggle("open")
+  };
+}

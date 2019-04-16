@@ -79,10 +79,20 @@ h3 {
 
 .data {
   background: var(--solarized-base2);
+  color: var(--solarized-base02);
+
   position: relative;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  font-style: italic;
+
+  cursor: pointer;
+
+  max-height: 38px;
+
+  transition: max-height 0.5s, background 0.5s;
 }
 
 .data::after {
@@ -97,12 +107,16 @@ h3 {
   transition: transform 0.5s;
 }
 
-.data:hover {
+.data.open {
+  background: var(--solarized-base3);
+  color: black;
   white-space: pre-wrap;
   max-height: 1000px;
+
+  font-style: unset;
 }
 
-.data:hover::after {
+.data.open::after {
   transform: rotate(0deg);
 }
 
