@@ -75,3 +75,36 @@ function addExample(data, number, s) {
   // sumelem.innerHTML = JSON.stringify(summary, null, "  ");
   outelem.innerHTML = s.printSummary(summary);
 }
+
+Dropzone.options.upload = {
+  url: "#",
+  maxFiles: 1,
+  acceptedFiles: "application/json",
+  accept: function(file, done) {
+    console.log("file uploaded");
+
+    console.log(file);
+
+    var reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+
+    reader.onload = function(evt) {
+      try {
+        let sum = new jsonSummary({arraySampleCount: 50, startExpanded: true});
+        let data = JSON.parse(evt.target.result);
+        console.log(data);
+
+        let outElem = document.getElementById("outputUser");
+
+        let summary = sum.summarize(data);
+
+        outElem.innerHTML = sum.printSummary(summary);
+      } catch (err) {
+        console.log("error parsing JSON");
+      }
+    };
+    reader.onerror = function(evt) {
+      console.log("error reading file");
+    };
+  }
+};

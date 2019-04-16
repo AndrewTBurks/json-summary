@@ -225,3 +225,73 @@ test("handles sampling boolean", () => {
 
   expect(summary).toMatchObject(expected);
 });
+
+test("handles sampling array", () => {
+  let object = [
+    [1],
+    [2, 3],
+    [4, 5, 6],
+    [7, 8],
+    [9]
+  ];
+
+  let summary = summarizerSampled.summarize(object);
+
+  let expected = {
+    count: 1,
+    type: "Array",
+    length: 5,
+    items: {
+      0: {
+        count: 5,
+        type: "Array",
+        length: 1.8,
+        items: {
+          0: {
+            type: "number",
+            count: 9,
+            range: [1, 9],
+            example: expect.any(Number)
+          }
+        }
+      }
+    }
+  };
+
+  expect(summary).toMatchObject(expected);
+});
+
+test("handles sampling object", () => {
+  let object = [
+    [1],
+    [2, 3],
+    [4, 5, 6],
+    [7, 8],
+    [9]
+  ];
+
+  let summary = summarizerSampled.summarize(object);
+
+  let expected = {
+    count: 1,
+    type: "Array",
+    length: 5,
+    items: {
+      0: {
+        count: 5,
+        type: "Array",
+        length: 1.8,
+        items: {
+          0: {
+            type: "number",
+            count: 9,
+            range: [1, 9],
+            example: expect.any(Number)
+          }
+        }
+      }
+    }
+  };
+
+  expect(summary).toMatchObject(expected);
+});

@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="summarizer.css">
   <script src="json-summary.js"></script>
 
+  <!-- Dropzone.js files -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -17,6 +21,7 @@
     <h1 class="title">json-summary</h1>
     <div class="links">
       <a href="#usage">Usage</a>
+      <a href="#tryIt">Try It</a>
       <a href="#examples">Examples</a>
       <a href="https://github.com/AndrewTBurks/json-summary">GitHub</a>
     </div>
@@ -98,6 +103,19 @@ let output = jsonSum.printSummary(summary);</div>
       <h4>Interactive Summary <span style="font-family:'Courier New', Courier, monospace">(output)</span></h4>
       <div id="output1" class="summary json-summary-wrapper"></div>
 
+
+    </div>
+
+    <h3 id="tryIt">Try it yourself!</h3>
+    <div class="section">
+      <h4>Upload your data file</h4>
+      <form id="upload" class="dropzone"></form>
+      <h4>Interactive Summary</h4>
+      <div id="outputUser" class="summary json-summary-wrapper">
+        <div style="text-align: center">
+          <span style="font-family:'Courier New', Courier, monospace">Your file summarized with json-summary</span>
+        </div>
+      </div>
 
     </div>
 
