@@ -173,11 +173,8 @@ const summarizer = (function() {
       // assume theyre all a matching type
 
       let joinableTypes = {Array: true, Object: true, boolean: true, string: true, number: true};
-
-      console.log(itemset);
       let items = itemset.filter(i => joinableTypes[i.type]);
 
-      console.log(items);
       if (items.length) {
         let type = items[0].type;
         return joinItems(items.filter(i => i.type === type), type);
@@ -276,9 +273,6 @@ const summarizer = (function() {
         }
       };
 
-      // if ()
-
-      console.log(type, itemArr);
       return joiner[type](itemArr);
     }
 
