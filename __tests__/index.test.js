@@ -263,34 +263,58 @@ test("handles sampling array", () => {
 
 test("handles sampling object", () => {
   let object = [
-    [1],
-    [2, 3],
-    [4, 5, 6],
-    [7, 8],
-    [9]
+    {a: 1},
+    {b: 2, c: 3},
+    {a: 2, b: 4, c: 6},
+    {a: 3, c: 9, d: 12},
+    {d: 2, e: 5}
   ];
 
   let summary = summarizerSampled.summarize(object);
 
   let expected = {
     count: 1,
-    type: "Array",
-    length: 5,
     items: {
-      0: {
+      "0": {
         count: 5,
-        type: "Array",
-        length: 1.8,
         items: {
-          0: {
-            type: "number",
-            count: 9,
-            range: [1, 9],
-            example: expect.any(Number)
+          a: {
+            count: 3,
+            example: expect.any(Number),
+            range: [1, 3],
+            type: "number"
+          },
+          b: {
+            count: 2,
+            example: expect.any(Number),
+            range: [2, 4],
+            type: "number"
+          },
+          c: {
+            count: 3,
+            example: expect.any(Number),
+            range: [3, 9],
+            type: "number"
+          },
+          d: {
+            count: 2,
+            example: expect.any(Number),
+            range: [2, 12],
+            type: "number"
+          },
+          e: {
+            count: 1,
+            example: expect.any(Number),
+            range: [5, 5],
+            type: "number"
           }
-        }
+        },
+        keys: ["a", "b", "c", "d", "e"],
+        type: "Object"
       }
-    }
+    },
+    length: 5,
+    type: "Array"
   };
 
   expect(summary).toMatchObject(expected);
