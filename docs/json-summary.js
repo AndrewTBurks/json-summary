@@ -1,4 +1,4 @@
-// https://andrewtburks.dev/json-summary v0.2.2 Copyright 2019 Andrew Burks
+// https://andrewtburks.dev/json-summary v0.2.3 Copyright 2019 Andrew Burks
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
@@ -391,13 +391,13 @@ const summarizer = (function() {
   
     function wrapInHTML(value, role, type) {
       let tags = {
-        type: `<span class="json-summary json-summary-type json-summary-type-${value}">&lt;${value}&gt;</span>`,
-        value: `<span class="json-summary json-summary-value json-summary-value-${type}">${value}</span>`,
-        range: `<span class="json-summary json-summary-range json-summary-range-${type}">[${value[0]}, ${value[1]}]</span>`,
-        name: `<span class="json-summary json-summary-name">${value}</span>`,
-        length: `<span class="json-summary json-summary-length">(${value})</span>`,
-        circular: `<span class="json-summary json-summary-circular">${value}</span>`,
-        layer: `<span class="json-summary json-summary-checkbox ${
+        type: () => `<span class="json-summary json-summary-type json-summary-type-${value}">&lt;${value}&gt;</span>`,
+        value: () => `<span class="json-summary json-summary-value json-summary-value-${type}">${value}</span>`,
+        range: () => `<span class="json-summary json-summary-range json-summary-range-${type}">[${value[0]}, ${value[1]}]</span>`,
+        name: () => `<span class="json-summary json-summary-name">${value}</span>`,
+        length: () => `<span class="json-summary json-summary-length">(${value})</span>`,
+        circular: () => `<span class="json-summary json-summary-circular">${value}</span>`,
+        layer: () => `<span class="json-summary json-summary-checkbox ${
           options.startExpanded ? "checked" : ""
         }">
               <input type="checkbox" ${
@@ -407,11 +407,11 @@ const summarizer = (function() {
                 me.parentNode.classList.toggle('checked');
               })(this)"></span>
             </span><div class="json-summary json-summary-layer">${value}</div>`,
-        child: `<div class="json-summary json-summary-child">${value}</div>`,
-        keys: `<span class="json-summary json-summary-keys">${value}</span>`
+        child: () => `<div class="json-summary json-summary-child">${value}</div>`,
+        keys: () => `<span class="json-summary json-summary-keys">${value}</span>`
       };
-  
-      return tags[role];
+
+      return tags[role]();
     }
 
     function htmlPercentageBar(percentage) {

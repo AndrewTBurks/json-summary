@@ -90,7 +90,7 @@ Dropzone.options.upload = {
 
     reader.onload = function(evt) {
       try {
-        let sum = new jsonSummary({arraySampleCount: 50, startExpanded: true});
+        let sum = new jsonSummary({arraySampleCount: 50, startExpanded: false});
         let data = JSON.parse(evt.target.result);
         console.log(data);
 
