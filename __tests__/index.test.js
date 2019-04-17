@@ -1,12 +1,12 @@
 let JsonSummary = require("../index");
 
-let summarizerNoSample = new JsonSummary({arraySampleCount: 0});
-let summarizerSampled = new JsonSummary({ arraySampleCount: 5 });
+// let summarizerNoSample = new JsonSummary({arraySampleCount: 0});
+// let summarizerSampled = new JsonSummary({ arraySampleCount: 5 });
 
 test("handles string", () => {
   let object = "Test";
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     "example": "Test",
@@ -19,7 +19,7 @@ test("handles string", () => {
 test("handles number", () => {
   let object = 20.2;
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     example: 20.2,
@@ -32,7 +32,7 @@ test("handles number", () => {
 test("handles boolean", () => {
   let object = true;
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     count: 1,
@@ -44,7 +44,7 @@ test("handles boolean", () => {
 test("handles null", () => {
   let object = null;
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     count: 1,
@@ -56,7 +56,7 @@ test("handles null", () => {
 test("handles undefined", () => {
   let object = undefined;
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     count: 1,
@@ -68,8 +68,8 @@ test("handles undefined", () => {
 test("handles array", () => {
   let object = ["apple", "banana", "canteloupe"];
 
-  let summary = summarizerNoSample.summarize(object);
-  let summary2 = summarizerSampled.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
+  let summary2 = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
   expect(summary).toEqual({
     count: 1,
@@ -103,7 +103,7 @@ test("handles array", () => {
 test('handles object', () => {
   let object = { a: 1 };
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     "count": 1,
@@ -117,7 +117,7 @@ test("handles circular reference", () => {
   let object = {"x": 1};
   object.y = object;
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     count: 1,
@@ -143,7 +143,7 @@ test("handles empty array", () => {
     a: []
   };
 
-  let summary = summarizerNoSample.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
     count: 1,
@@ -167,7 +167,7 @@ test("handles empty array", () => {
 test("handles sampling string", () => {
   let object = ["apple", "orange", "pear", "kiwi", "canteloupe"];
 
-  let summary = summarizerSampled.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
   let expected = {
     count: 1,
@@ -189,7 +189,7 @@ test("handles sampling string", () => {
 test("handles sampling number", () => {
   let object = [18.5, 26.9, 69.69, 80.1, 99.9];
 
-  let summary = summarizerSampled.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
   let expected = {
     count: 1,
@@ -211,7 +211,7 @@ test("handles sampling number", () => {
 test("handles sampling boolean", () => {
   let object = [true, false, false, true, true];
 
-  let summary = summarizerSampled.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
   let expected = {
     count: 1,
@@ -238,7 +238,7 @@ test("handles sampling array", () => {
     [1]
   ];
 
-  let summary = summarizerSampled.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
   let expected = {
     count: 1,
@@ -273,7 +273,7 @@ test("handles sampling object", () => {
     {d: 2, e: 5}
   ];
 
-  let summary = summarizerSampled.summarize(object);
+  let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
   let expected = {
     count: 1,

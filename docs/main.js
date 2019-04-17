@@ -53,27 +53,24 @@ let ex0 = {
   b: { x: "y" }
 };
 
-let summarizer1 = new jsonSummary({startExpanded: true});
 
-let summary = summarizer1.summarize(ex0);
+let summary = jsonSummary.summarize(ex0);
 let sumelem0 = document.getElementById("summary1");
 let outelem0 = document.getElementById("output1");
 sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
-outelem0.innerHTML = summarizer1.printSummary(summary);
+outelem0.innerHTML = jsonSummary.printSummary(summary, { startExpanded: true });
 
-addExample(ex1, 2, summarizer1);
-addExample(ex2, 3, summarizer1);
+addExample(ex1, 2);
+addExample(ex2, 3);
 
 function addExample(data, number, s) {
-  let summary = s.summarize(data);
+  let summary = jsonSummary.summarize(data);
 
   let dataelem = document.getElementById("data" + number);
-  // let sumelem = document.getElementById("summary" + number);
   let outelem = document.getElementById("output" + number);
 
   dataelem.innerHTML = JSON.stringify(data, null, "  ");
-  // sumelem.innerHTML = JSON.stringify(summary, null, "  ");
-  outelem.innerHTML = s.printSummary(summary);
+  outelem.innerHTML = jsonSummary.printSummary(summary, { startExpanded: true });
 }
 
 Dropzone.options.upload = {
@@ -90,15 +87,14 @@ Dropzone.options.upload = {
 
     reader.onload = function(evt) {
       try {
-        let sum = new jsonSummary({arraySampleCount: 50, startExpanded: false});
         let data = JSON.parse(evt.target.result);
         console.log(data);
 
         let outElem = document.getElementById("outputUser");
 
-        let summary = sum.summarize(data);
+        let summary = jsonSummary.summarize(data, {arraySampleCount: 50});
 
-        outElem.innerHTML = sum.printSummary(summary);
+        outElem.innerHTML = jsonSummary.printSummary(summary, {startExpanded: false});
       } catch (err) {
         console.log("error parsing and summarizing JSON");
         console.error(err);
