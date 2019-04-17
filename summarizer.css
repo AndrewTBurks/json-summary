@@ -1,9 +1,48 @@
 .json-summary-wrapper {
     white-space: pre-wrap;
+
+    padding: 10px 20px;
+    border-radius: 5px;
 }
 
 .json-summary {
     font-family: monospace;
+}
+
+.json-summary-wrapper.light {
+    --json-keys: var(--solarized-red);
+    --json-type: var(--solarized-cyan);
+    --json-type-str: var(--solarized-green);
+    --json-value: var(--solarized-base01);
+    --json-length: var(--solarized-blue);
+    --json-circular: var(--solarized-violet);
+
+    --json-bg: var(--solarized-base3);
+    --json-border: var(--solarized-base01);
+    --json-percent: var(--solarized-blue);
+    --json-checkbox: var(--solarized-base1);
+
+    background: var(--json-bg);
+    border: 2px solid var(--json-border);
+    color: black;
+}
+
+.json-summary-wrapper.dark {
+    --json-keys: var(--snippets-red);
+    --json-type: var(--snippets-yellow);
+    --json-type-str: var(--snippets-green);
+    --json-value: var(--snippets-lightgray);
+    --json-length: var(--snippets-blue);
+    --json-circular: var(--snippets-purple);
+
+    --json-bg: var(--snippets-darkgray);
+    --json-border: var(--solarized-base01);
+    --json-percent: var(--snippets-blue);
+    --json-checkbox: var(--snippets-lightgray);
+
+    background: var(--json-bg);
+    border: 2px solid var(--json-border);
+    color: var(--json-value);
 }
 
 .json-summary-checkbox {
@@ -40,8 +79,8 @@
   line-height: 10px;
   text-align: center;
 
-  color: var(--solarized-base1);
-  border: 1px solid var(--solarized-base1);
+  color: var(--json-checkbox);
+  border: 1px solid var(--json-checkbox);
 }
 
 .json-summary-checkboxmarker::before {
@@ -59,7 +98,7 @@
 .json-summary-layer>.json-summary-keys {
     display: none;
     /* display: inline; */
-    color: var(--solarized-red);
+    color: var(--json-keys);
 
     overflow: hidden;
     white-space: nowrap;
@@ -80,16 +119,16 @@
 
 .json-summary-type {
     cursor: help;
-    color: var(--solarized-cyan);
+    color: var(--json-type);
 }
 
 .json-summary-type.json-summary-type-string {
-	color: var(--solarized-green);
+	color: var(--json-type-str);
 }
 
 .json-summary-value {
     display: none;
-    color: var(--solarized-base01);
+    color: var(--json-value);
 
     margin-left: 4px;
     font-style: italic;
@@ -117,7 +156,7 @@
 
 .json-summary-range {
     display: none;
-    color: var(--solarized-base01);
+    color: var(--json-value);
 
     margin-left: 4px;
     font-style: italic;
@@ -136,15 +175,15 @@
 }
 
 .json-summary-name {
-	color: var(--solarized-red);
+	color: var(--json-keys);
 }
 
 .json-summary-length {
-	color: var(--solarized-blue);
+	color: var(--json-length);
 }
 
 .json-summary-circular {
-	color: var(--solarized-violet);
+	color: var(--json-circular);
 }
 
 .json-summary-bar {
@@ -154,8 +193,8 @@
     position: relative;
     display: inline-block;
 
-    background: var(--solarized-base3);
-    border: 1px solid var(--solarized-base01);
+    background: var(--json-bg);
+    border: 1px solid var(--json-border);
     overflow: hidden;
 
     border-radius: 0 2px 2px 0;
@@ -170,7 +209,7 @@
     top: 0;
     left: 0;
 
-    background: var(--solarized-cyan);
+    background: var(--json-percent);
     /* border: solid var(--solarized-cyan);
     border-width: 0 1px 0 1px; */
     /* border-radius: 0 2px 2px 0; */
@@ -194,4 +233,13 @@
     --solarized-blue:      #268bd2;
     --solarized-cyan:      #2aa198;
     --solarized-green:     #859900;
+
+    /* colors from one dark (?) editor theme */
+    --snippets-darkgray: #282c34;
+    --snippets-lightgray: #abb2bf;
+    --snippets-yellow: #e5c07b;
+	--snippets-blue: #61afef;
+	--snippets-red: #ef596f;
+	--snippets-purple: #d55fde;
+	--snippets-green: #89ca78;
 }

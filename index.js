@@ -4,7 +4,8 @@ const summarizer = (function() {
     indentation:  " ", // or "\t"
     indentCount: 2,
     showExampleValue: true,
-    startExpanded: false
+    startExpanded: false,
+    theme: "dark"
   };
 
   // summarizer utility class
@@ -13,7 +14,8 @@ const summarizer = (function() {
       indentation =  " ", // or "\t"
       indentCount = 2,
       showExampleValue = true,
-      startExpanded = false
+      startExpanded = false,
+      theme = "dark"
     } = defaultOptions) {
 
     let options = {
@@ -21,7 +23,8 @@ const summarizer = (function() {
       indentation,
       indentCount,
       showExampleValue,
-      startExpanded
+      startExpanded,
+      theme
     };
   
     // utility function to extract overall json structure without printing entire data object
@@ -293,7 +296,7 @@ const summarizer = (function() {
     // utility function to stringify the summary output from summarizeJSON
     function printSummarizedJSON(summary) {
       // start at 0 indentation
-      return printSummaryLevel(summary, 0, 1);
+      return `<div class='json-summary-wrapper ${options.theme}'>` + printSummaryLevel(summary, 0, 1);
     }
   
     function printSummaryLevel(data, l, prevCount) {

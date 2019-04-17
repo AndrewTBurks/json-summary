@@ -54,23 +54,18 @@ h3 {
 }
 
 .data, .summary, .code {
-  /* min-height: 100px; */
-  /* width: 400px; */
   width: 100%;
-  /* min-width: 400px; */
-
-  padding: 10px 20px;
-
   margin: 10px;
-
-  background: var(--solarized-base3);
-  border: 1px solid var(--solarized-base01);
-
-  border-radius: 5px;
+  
 }
 
 .data,
 .code {
+  padding: 10px 20px;
+  background: var(--solarized-base3);
+  border: 1px solid var(--solarized-base01);
+  
+  border-radius: 5px;
   font-size: 14px;
   min-height: unset;
   color: var(--solarized-base03);
@@ -153,6 +148,7 @@ h3 {
 #option-table {
 
 }
+
 #option-table td {
   padding: 2px 5px;
 }

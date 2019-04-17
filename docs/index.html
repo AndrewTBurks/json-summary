@@ -42,9 +42,9 @@
     <div class="section">
       <h4>Adding to your project</h4>
       <p>in browser <span style="font-family: monospace">(unpkg)</span></p>
-      <div class="code">&lt;link rel="stylesheet" href="https://unpkg.com/json-summary@0.2.2/summarizer.css"&gt;
+      <div class="code">&lt;link rel="stylesheet" href="https://unpkg.com/json-summary@0.2.4/summarizer.css"&gt;
 
-&lt;script src="https://unpkg.com/json-summary@0.2.2/dist/json-summary.min.js"&gt;
+&lt;script src="https://unpkg.com/json-summary@0.2.4/dist/json-summary.min.js"&gt;
       </div>
       <p>in node <span style="font-family: monospace">(npm install json-summary)</span></p>
       <div class="code">const jsonSummary = require("json-summary");</div>
@@ -53,16 +53,27 @@
 
       <h4>Creation (with default options):</h4>
       <div class="code" style="white-space:pre-wrap;">let jsonSum = new jsonSummary({
+  arraySampleCount: 10,
+  theme: "dark",
   indentation: " ",
   indentCount: 2,
   showExampleValue: true,
-  startExpanded: false,
-  arraySampleCount: 10
+  startExpanded: false
 });</div>
 
       <!-- <p>Options:</p> -->
       <table id="option-table">
         <tr class="table-header"><th>Option</th><th>Type</th><th>Description</th></tr>
+        <tr>
+          <td style="font-family: 'Courier New', Courier, monospace">arraySampleCount</td>
+          <td style="font-family: 'Courier New', Courier, monospace">Number</td>
+          <td>the number of elements to sample and summarize for arrays</td>
+        </tr>
+        <tr>
+          <td style="font-family: 'Courier New', Courier, monospace">theme</td>
+          <td style="font-family: 'Courier New', Courier, monospace">String</td>
+          <td>"light" or "dark" theme for output</td>
+        </tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">indentation</td>
           <td style="font-family: 'Courier New', Courier, monospace">String</td>
@@ -83,11 +94,6 @@
           <td style="font-family: 'Courier New', Courier, monospace">Boolean</td>
           <td>whether the sections of the object should begin open or closed</td>
         </tr>
-        <tr>
-          <td style="font-family: 'Courier New', Courier, monospace">arraySampleCount</td>
-          <td style="font-family: 'Courier New', Courier, monospace">Number</td>
-          <td>the number of elements to sample and summarize for arrays</td>
-        </tr>
       </table>
 
       <h4>Summarizing:</h4>
@@ -96,12 +102,12 @@
   b: {x: "y"}
 };
 
-let summary = jsonSum.summarize(data);
-let output = jsonSum.printSummary(summary);</div>
+let summary = jsonSum.summarize(data); // object
+let output = jsonSum.printSummary(summary); // HTML string</div>
       <h4>Summary Information <span style="font-family:'Courier New', Courier, monospace">(summary)</span></h4>
       <div id="summary1" class="data"></div>
       <h4>Interactive Summary <span style="font-family:'Courier New', Courier, monospace">(output)</span></h4>
-      <div id="output1" class="summary json-summary-wrapper"></div>
+      <div id="output1" class="summary"></div>
 
 
     </div>
@@ -111,7 +117,7 @@ let output = jsonSum.printSummary(summary);</div>
       <h4>Upload your data file</h4>
       <form id="upload" class="dropzone"></form>
       <h4>Interactive Summary</h4>
-      <div id="outputUser" class="summary json-summary-wrapper">
+      <div id="outputUser" class="summary">
         <div style="text-align: center">
           <span style="font-family:'Courier New', Courier, monospace">Your file summarized with json-summary</span>
         </div>
@@ -136,7 +142,7 @@ let output = jsonSum.printSummary(summary);</div>
       <h4>Interactive Summary</h4>
       <p>The mean length <span style="font-weight: bold; font-family: 'Courier New', Courier, monospace">(μ = 3.7)</span> represents the average length of the <span
           style="font-weight: bold; font-family: 'Courier New', Courier, monospace">powers</span> array across members sampled</p>
-      <div id="output3" class="summary json-summary-wrapper"></div>
+      <div id="output3" class="summary"></div>
     </div>
 
     <div style="color: #586e75;font-size: 12px;text-align: center; margin-top: 5px">

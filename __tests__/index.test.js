@@ -268,7 +268,7 @@ test("handles sampling object", () => {
   let object = [
     {a: 1},
     {b: 2, c: 3},
-    {a: 2, b: 4, c: 6},
+    {a: 2, b: null, c: 6},
     {a: 3, c: 9, d: 12},
     {d: 2, e: 5}
   ];
@@ -288,9 +288,9 @@ test("handles sampling object", () => {
             type: "number"
           },
           b: {
-            count: 2,
+            count: 1,
             example: expect.any(Number),
-            range: [2, 4],
+            range: [2, 2],
             type: "number"
           },
           c: {
