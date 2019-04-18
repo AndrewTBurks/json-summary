@@ -162,3 +162,44 @@ h3 {
   border-radius: 5px;
   background: white;
 }
+
+.themePanel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.themePanel .themesTitle {
+  margin-bottom: 5px;
+}
+
+.themeChoice {
+  border-radius: 4px;
+  background: #e0e0e0;
+  border: 1px solid black;
+  margin: 2px;
+}
+
+:root {
+  /* using colors from the solarized light theme */
+  --solarized-base03: #002b36;
+  --solarized-base02: #073642;
+  --solarized-base01: #586e75;
+  --solarized-base00: #657b83;
+  --solarized-base0: #839496;
+  --solarized-base1: #93a1a1;
+  --solarized-base2: #eee8d5;
+  --solarized-base3: #fdf6e3;
+  --solarized-yellow: #b58900;
+  --solarized-orange: #cb4b16;
+  --solarized-red: #dc322f;
+  --solarized-magenta: #d33682;
+  --solarized-violet: #6c71c4;
+  --solarized-blue: #268bd2;
+  --solarized-cyan: #2aa198;
+  --solarized-green: #859900;
+}

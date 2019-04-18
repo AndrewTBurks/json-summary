@@ -1,0 +1,221 @@
+@import 'colors';
+@import 'themes';
+
+.json-summary-wrapper {
+  @include themify($themes) {
+    background: themed('json-bg');
+    color: themed('json-text');
+    border: 1px solid themed('json-border');
+  }
+
+  white-space: pre-wrap;
+
+  padding: 10px 20px;
+  border-radius: 5px;
+
+  .json-summary {
+    font-family: monospace;
+  }
+
+  .json-summary-checkbox {
+    display: inline;
+    position: relative;
+    cursor: pointer;
+
+    padding-left: 10px;
+    margin-left: 2px;
+    white-space: nowrap;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .json-summary-checkboxmarker {
+      @include themify($themes) {
+        color: themed('json-checkbox');
+        border: 1px solid themed('json-checkbox');
+      }
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+    
+      line-height: 10px;
+      text-align: center;
+    
+      &::before {
+        content: "+";
+      }
+    }
+
+    &.checked {
+      &>.json-summary-checkboxmarker {
+        &::before {
+          content: "–";
+        }
+      }
+
+      &+.json-summary-layer>.json-summary-child {
+        display: inline;
+      }
+
+      &+.json-summary-layer>.json-summary-keys {
+        display: none;
+      }
+    }
+  }
+
+  .json-summary-layer {
+    display: inline;
+
+    .json-summary-keys {
+      @include themify($themes) {
+        color: themed('json-keys');
+      }
+
+      display: none;
+      /* display: inline; */
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &>.json-summary-child {
+      display: none;
+    }
+  }
+
+  .json-summary-type {
+    @include themify($themes) {
+      color: themed('json-type');
+    }
+
+    cursor: help;
+
+    &.json-summary-type-string {
+      @include themify($themes) {
+        color: themed('json-type-str');
+      }
+    }
+
+
+    &:hover{
+      &+.json-summary-value {
+        display: inline;
+      }
+
+      &+.json-summary-value+.json-summary-range {
+        display: inline;
+      }
+    }
+  }
+
+  .json-summary-value {
+    @include themify($themes) {
+      color: themed('json-value');
+    }
+    display: none;
+
+    margin-left: 4px;
+    font-style: italic;
+
+    &::before {
+      content: "(";
+    }
+
+    &::after {
+      content: ")";
+    }
+
+    &.json-summary-value-string::before {
+      content: "('";
+    }
+
+    &.json-summary-value-string::after {
+      content: "')";
+    }
+  }
+
+  .json-summary-range {
+    @include themify($themes) {
+      color: themed('json-value');
+    }
+
+    display: none;
+
+    margin-left: 4px;
+    font-style: italic;
+
+    &::before {
+      content: "val: ";
+    }
+
+    &.json-summary-range-string::before {
+      content: "len: ";
+    }
+  }
+
+  .json-summary-name {
+    @include themify($themes) {
+      color: themed('json-keys');
+    }
+  }
+
+  .json-summary-length {
+    @include themify($themes) {
+      color: themed('json-length');
+    }
+  }
+
+  .json-summary-circular {
+    @include themify($themes) {
+      color: themed('json-circular');
+    }
+  }
+
+  .json-summary-bar {
+    @include themify($themes) {
+      background: themed('json-bg');
+      border: 1px solid themed('json-border');
+    }
+
+    width: 25px;
+    height: 10px;
+    margin-right: 5px;
+    position: relative;
+    display: inline-block;
+
+    // background: $json-bg;
+    // border: 1px solid $json-border;
+    overflow: hidden;
+
+    border-radius: 0 2px 2px 0;
+
+    cursor: help;
+  }
+
+  .json-summary-percentage {
+    @include themify($themes) {
+      background: themed('json-percent');
+    }
+
+    position: absolute;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+  }
+}

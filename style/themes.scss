@@ -1,0 +1,115 @@
+@import 'colors';
+
+$themes: (
+  light: (
+    json-keys: $solarized-red,
+    json-type: $solarized-cyan,
+    json-type-str: $solarized-green,
+    json-value: $solarized-base01,
+    json-length: $solarized-blue,
+    json-circular: $solarized-violet,
+
+    json-bg: $solarized-base3,
+    json-border: $solarized-base01,
+    json-percent: $solarized-blue,
+    json-checkbox: $solarized-base1,
+    json-text: $solarized-base02,
+
+    // background: $json-bg;
+    // border: 2px solid $json-border;
+    // color: black;
+  ),
+  dark: (
+    json-keys: $snippets-red,
+    json-type: $snippets-yellow,
+    json-type-str: $snippets-green,
+    json-value: $snippets-lightgray,
+    json-length: $snippets-blue,
+    json-circular: $snippets-purple,
+
+    json-bg: $snippets-darkgray,
+    json-border: $solarized-base01,
+    json-percent: $snippets-blue,
+    json-checkbox: $snippets-lightgray,
+    json-text: $snippets-lightgray,
+
+    // background: $json-bg;
+    // border: 2px solid $json-border;
+    // color: $json-value;
+  ),
+  night-owl: (
+    json-keys: $no-red,
+    json-type: $no-yellow,
+    json-type-str: $no-green,
+    json-value: $no-gray,
+    json-length: $no-blue,
+    json-circular: $no-pink,
+
+    json-bg: $no-dark,
+    json-border: $no-gray,
+    json-percent: $no-blue,
+    json-checkbox: $no-lightgray,
+    json-text: $no-lightgray,
+
+    // background: $json-bg;
+    // border: 2px solid $json-border;
+    // color: $no-lightgray;
+  ),
+  monokai: (
+    json-keys: $monokai-red,
+    json-type: $monokai-yellow,
+    json-type-str: $monokai-green,
+    json-value: $monokai-gray,
+    json-length: $monokai-cyan,
+    json-circular: $monokai-purple,
+
+    json-bg: $monokai-dark,
+    json-border: $monokai-gray,
+    json-percent: $monokai-cyan,
+    json-checkbox: $monokai-white,
+    json-text: $monokai-white,
+
+    // background: $json-bg;
+    // border: 2px solid $json-border;
+    // color: $monokai-white;
+  ),
+  abyss: (
+    json-keys: $abyss-yellow,
+    json-type: $abyss-pink,
+    json-type-str: $abyss-green,
+    json-value: $abyss-comment,
+    json-length: $abyss-blue,
+    json-circular: $abyss-purple,
+
+    json-bg: $abyss-dark,
+    json-border: $abyss-comment,
+    json-percent: $abyss-blue,
+    json-checkbox: $abyss-white,
+    json-text: $abyss-white,
+  )
+);
+
+@mixin themify($themes: $themes) {
+
+  @each $theme,
+  $map in $themes {
+
+    .#{$theme} & {
+      $theme-map: () !global;
+
+      @each $key,
+      $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}

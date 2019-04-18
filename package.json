@@ -9,14 +9,13 @@
     "summary"
   ],
   "main": "index.js",
-  "module": "dist/json-summary.esm.js",
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
   "scripts": {
     "jest": "jest",
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "prepublish": "npm run build && npm test",
-    "build": "rollup -c && cp dist/json-summary.js docs/json-summary.js && cp summarizer.css docs/summarizer.css"
+    "build": "rollup -c && cp dist/json-summary.js docs/json-summary.js && sass style/main.scss dist/summarizer.css && cp dist/summarizer.css docs/summarizer.css"
   },
   "repository": {
     "type": "git",
@@ -39,5 +38,7 @@
     "rollup-plugin-node-resolve": "^4.2.1",
     "rollup-plugin-terser": "^4.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "sass": "^1.18.0"
+  }
 }

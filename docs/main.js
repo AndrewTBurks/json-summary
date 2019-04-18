@@ -1,12 +1,10 @@
 let ex1 = {
-  "name": "val1",
-  "data": [
-    {"a": 1}, {a: 6, "b": 2}, {b: null, "c": 3}
-  ],
-  "isOk": true,
-  "location": {
-    "x": 1,
-    "y": 2
+  name: "val1",
+  data: [{ a: 1 }, { a: 6, b: 2 }, { b: null, c: 3 }],
+  isOk: true,
+  location: {
+    x: 1,
+    y: 2
   }
 };
 
@@ -53,12 +51,14 @@ let ex0 = {
   b: { x: "y" }
 };
 
-
 let summary = jsonSummary.summarize(ex0);
 let sumelem0 = document.getElementById("summary1");
 let outelem0 = document.getElementById("output1");
 sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
-outelem0.innerHTML = jsonSummary.printSummary(summary, { startExpanded: true });
+outelem0.innerHTML = jsonSummary.printSummary(summary, {
+  startExpanded: true,
+  theme: "dark"
+});
 
 addExample(ex1, 2);
 addExample(ex2, 3);
@@ -70,7 +70,10 @@ function addExample(data, number, s) {
   let outelem = document.getElementById("output" + number);
 
   dataelem.innerHTML = JSON.stringify(data, null, "  ");
-  outelem.innerHTML = jsonSummary.printSummary(summary, { startExpanded: true });
+  outelem.innerHTML = jsonSummary.printSummary(summary, {
+    startExpanded: true,
+    theme: "dark"
+  });
 }
 
 Dropzone.options.upload = {
@@ -92,9 +95,12 @@ Dropzone.options.upload = {
 
         let outElem = document.getElementById("outputUser");
 
-        let summary = jsonSummary.summarize(data, {arraySampleCount: 50});
+        let summary = jsonSummary.summarize(data, { arraySampleCount: 50 });
 
-        outElem.innerHTML = jsonSummary.printSummary(summary, {startExpanded: false});
+        outElem.innerHTML = jsonSummary.printSummary(summary, {
+          startExpanded: false,
+          theme: "dark"
+        });
       } catch (err) {
         console.log("error parsing and summarizing JSON");
         console.error(err);
@@ -111,6 +117,18 @@ let dataBlocks = document.getElementsByClassName("data");
 
 for (let i = 0; i < dataBlocks.length; i++) {
   dataBlocks[i].onclick = function() {
-    this.classList.toggle("open")
+    this.classList.toggle("open");
+  };
+}
+
+let themeChoices = document.getElementsByClassName("themeChoice");
+
+for (let i = 0; i < themeChoices.length; i++) {
+  themeChoices[i].onclick = function() {
+    let themeBlocks = document.getElementsByClassName("theme");
+
+    for (let j = 0; j < themeBlocks.length; j++) {
+      themeBlocks[j].className = "theme " + themeChoices[i].name;
+    }
   };
 }

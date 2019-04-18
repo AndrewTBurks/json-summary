@@ -310,9 +310,9 @@ function printSummarizedJSON(
 ) {
   // start at 0 indentation
   return (
-    `<div class='json-summary-wrapper ${theme}'>` +
+    `<div class="theme ${theme}"><div class='json-summary-wrapper'>` +
     printSummaryLevel(summary, 0, 1) +
-    `<div>`
+    `<div></div>`
   );
 
 

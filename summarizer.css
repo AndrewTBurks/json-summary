@@ -9,42 +9,6 @@
     font-family: monospace;
 }
 
-.json-summary-wrapper.light {
-    --json-keys: var(--solarized-red);
-    --json-type: var(--solarized-cyan);
-    --json-type-str: var(--solarized-green);
-    --json-value: var(--solarized-base01);
-    --json-length: var(--solarized-blue);
-    --json-circular: var(--solarized-violet);
-
-    --json-bg: var(--solarized-base3);
-    --json-border: var(--solarized-base01);
-    --json-percent: var(--solarized-blue);
-    --json-checkbox: var(--solarized-base1);
-
-    background: var(--json-bg);
-    border: 2px solid var(--json-border);
-    color: black;
-}
-
-.json-summary-wrapper.dark {
-    --json-keys: var(--snippets-red);
-    --json-type: var(--snippets-yellow);
-    --json-type-str: var(--snippets-green);
-    --json-value: var(--snippets-lightgray);
-    --json-length: var(--snippets-blue);
-    --json-circular: var(--snippets-purple);
-
-    --json-bg: var(--snippets-darkgray);
-    --json-border: var(--solarized-base01);
-    --json-percent: var(--snippets-blue);
-    --json-checkbox: var(--snippets-lightgray);
-
-    background: var(--json-bg);
-    border: 2px solid var(--json-border);
-    color: var(--json-value);
-}
-
 .json-summary-checkbox {
   display: inline;
   position: relative;
@@ -241,5 +205,28 @@
 	--snippets-blue: #61afef;
 	--snippets-red: #ef596f;
 	--snippets-purple: #d55fde;
-	--snippets-green: #89ca78;
+    --snippets-green: #89ca78;
+    
+    /* colors from night owl theme */
+    --no-dark: #011627;
+    --no-blue: #82aaff;
+    --no-green: #addb67;
+    --no-yellow: #ecc48d;
+    --no-cyan: #7fdbca;
+    --no-orange: #f78c6c;
+    --no-red: #ff5874;
+    --no-gray: #637777;
+    --no-lightgray: #d7dbe0;
+    --no-pink: #c792ea;
+
+    /* colors from monokai theme */
+    --monokai-dark: #272822;
+    --monokai-green: rgb(166, 226, 46);
+    --monokai-yellow: rgb(230, 219, 116);
+    --monokai-cyan: rgb(102, 217, 239);
+    --monokai-orange: rgb(253, 151, 31);
+    --monokai-red: rgb(249, 38, 114);
+    --monokai-gray: rgb(117, 113, 94);
+    --monokai-white: rgb(248, 248, 242);
+    --monokai-purple: rgb(174, 129, 255);
 }
