@@ -46,7 +46,9 @@ function summarizeJSON(data, {
 
             let summarizedSamples = [];
 
-            for (let [idx, item] of Object.entries(sampledItems)) {
+            for (let pair of Object.entries(sampledItems)) {
+              let item = pair[1];
+
               summarizedSamples.push(summarizeItem(item));
             }
 

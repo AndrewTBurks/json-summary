@@ -22,12 +22,12 @@ function printSummarizedJSON(
   // start at 0 indentation
   return (
     `<div class="theme ${theme}"><div class='json-summary-wrapper'>` +
-    printSummaryLevel(summary, 0, 1) +
+    printSummaryLevel(summary, 0) +
     `<div></div>`
   );
 
 
-  function printSummaryLevel(data, l, prevCount) {
+  function printSummaryLevel(data, l) {
     let string = "";
 
     if (data.circular) {
@@ -40,7 +40,7 @@ function printSummarizedJSON(
       string += wrapInHTML(keys, "keys");
 
       let childStrings = data.keys.map(key => {
-        return printSummaryLevel(data.items[key], l + 1, data.count);
+        return printSummaryLevel(data.items[key], l + 1);
       });
 
       if (childStrings.length) {
