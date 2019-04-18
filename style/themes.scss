@@ -14,10 +14,6 @@ $themes: (
     json-percent: $solarized-blue,
     json-checkbox: $solarized-base1,
     json-text: $solarized-base02,
-
-    // background: $json-bg;
-    // border: 2px solid $json-border;
-    // color: black;
   ),
   dark: (
     json-keys: $snippets-red,
@@ -32,10 +28,6 @@ $themes: (
     json-percent: $snippets-blue,
     json-checkbox: $snippets-lightgray,
     json-text: $snippets-lightgray,
-
-    // background: $json-bg;
-    // border: 2px solid $json-border;
-    // color: $json-value;
   ),
   night-owl: (
     json-keys: $no-red,
@@ -50,10 +42,6 @@ $themes: (
     json-percent: $no-blue,
     json-checkbox: $no-lightgray,
     json-text: $no-lightgray,
-
-    // background: $json-bg;
-    // border: 2px solid $json-border;
-    // color: $no-lightgray;
   ),
   monokai: (
     json-keys: $monokai-red,
@@ -68,18 +56,14 @@ $themes: (
     json-percent: $monokai-cyan,
     json-checkbox: $monokai-white,
     json-text: $monokai-white,
-
-    // background: $json-bg;
-    // border: 2px solid $json-border;
-    // color: $monokai-white;
   ),
   abyss: (
     json-keys: $abyss-yellow,
     json-type: $abyss-pink,
     json-type-str: $abyss-green,
     json-value: $abyss-comment,
-    json-length: $abyss-blue,
-    json-circular: $abyss-purple,
+    json-length: $abyss-purple,
+    json-circular: $abyss-blue,
 
     json-bg: $abyss-dark,
     json-border: $abyss-comment,

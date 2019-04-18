@@ -167,10 +167,15 @@ h3 {
   position: fixed;
   right: 0;
   top: 0;
-  padding: 5px;
+  padding: 8px;
 
   display: flex;
   flex-direction: column;
+
+  background: #fff9;
+  border: 1.25px solid #0004;
+
+  border-radius: 0 0 0 10px;
 }
 
 .themePanel .themesTitle {
@@ -182,6 +187,50 @@ h3 {
   background: #e0e0e0;
   border: 1px solid black;
   margin: 2px;
+  padding: 4px;
+
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.themeChoice[name="monokai"] {
+  border: 2px solid rgb(117, 113, 94);
+  background: #272822;
+  color: #fc9867;
+}
+
+.themeChoice[name="monokai"] .accent {
+  color: #a9dc76;
+}
+
+.themeChoice[name="dark"] {
+  border: 2px solid #abb2bf;
+  background: #282c34;
+  color: #61afef;
+}
+
+.themeChoice[name="dark"] .accent {
+  color: #89ca78;
+}
+
+.themeChoice[name="light"] {
+  border: 2px solid #839496;
+  background: #fdf6e3;
+  color: #6c71c4;
+}
+
+.themeChoice[name="light"] .accent {
+  color: #2aa198;
+}
+
+.themeChoice[name="abyss"] {
+  border: 2px solid #384887;
+  background: #181f2f;
+  color: #9966b8;
+}
+
+.themeChoice[name="abyss"] .accent {
+  color: #f280d0;
 }
 
 :root {

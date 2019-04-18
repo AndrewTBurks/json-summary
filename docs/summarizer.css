@@ -113,7 +113,7 @@
   color: #ff5874;
 }
 .monokai .json-summary-wrapper .json-summary-layer .json-summary-keys {
-  color: #f92672;
+  color: #ff6188;
 }
 .abyss .json-summary-wrapper .json-summary-layer .json-summary-keys {
   color: #ddbb88;
@@ -134,7 +134,7 @@
   color: #ecc48d;
 }
 .monokai .json-summary-wrapper .json-summary-type {
-  color: #e6db74;
+  color: #ffd866;
 }
 .abyss .json-summary-wrapper .json-summary-type {
   color: #f280d0;
@@ -149,7 +149,7 @@
   color: #addb67;
 }
 .monokai .json-summary-wrapper .json-summary-type.json-summary-type-string {
-  color: #a6e22e;
+  color: #a9dc76;
 }
 .abyss .json-summary-wrapper .json-summary-type.json-summary-type-string {
   color: #22aa44;
@@ -228,7 +228,7 @@
   color: #ff5874;
 }
 .monokai .json-summary-wrapper .json-summary-name {
-  color: #f92672;
+  color: #ff6188;
 }
 .abyss .json-summary-wrapper .json-summary-name {
   color: #ddbb88;
@@ -243,10 +243,10 @@
   color: #82aaff;
 }
 .monokai .json-summary-wrapper .json-summary-length {
-  color: #66d9ef;
+  color: #78dce8;
 }
 .abyss .json-summary-wrapper .json-summary-length {
-  color: #2277ff;
+  color: #9966b8;
 }
 .light .json-summary-wrapper .json-summary-circular {
   color: #6c71c4;
@@ -258,10 +258,10 @@
   color: #c792ea;
 }
 .monokai .json-summary-wrapper .json-summary-circular {
-  color: #ae81ff;
+  color: #ab9df2;
 }
 .abyss .json-summary-wrapper .json-summary-circular {
-  color: #9966b8;
+  color: #2277ff;
 }
 .json-summary-wrapper .json-summary-bar {
   width: 25px;
@@ -309,7 +309,7 @@
   background: #82aaff;
 }
 .monokai .json-summary-wrapper .json-summary-percentage {
-  background: #66d9ef;
+  background: #78dce8;
 }
 .abyss .json-summary-wrapper .json-summary-percentage {
   background: #2277ff;

@@ -1,3 +1,5 @@
+/* global jsonSummary, Dropzone */
+
 let ex1 = {
   name: "val1",
   data: [{ a: 1 }, { a: 6, b: 2 }, { b: null, c: 3 }],
@@ -63,7 +65,7 @@ outelem0.innerHTML = jsonSummary.printSummary(summary, {
 addExample(ex1, 2);
 addExample(ex2, 3);
 
-function addExample(data, number, s) {
+function addExample(data, number) {
   let summary = jsonSummary.summarize(data);
 
   let dataelem = document.getElementById("data" + number);
@@ -80,10 +82,7 @@ Dropzone.options.upload = {
   url: "#",
   maxFiles: 1,
   acceptedFiles: "application/json",
-  accept: function(file, done) {
-    console.log("file uploaded");
-
-    console.log(file);
+  accept: function(file) {
 
     var reader = new FileReader();
     reader.readAsText(file, "UTF-8");
@@ -91,7 +90,6 @@ Dropzone.options.upload = {
     reader.onload = function(evt) {
       try {
         let data = JSON.parse(evt.target.result);
-        console.log(data);
 
         let outElem = document.getElementById("outputUser");
 
@@ -102,13 +100,12 @@ Dropzone.options.upload = {
           theme: "dark"
         });
       } catch (err) {
-        console.log("error parsing and summarizing JSON");
-        console.error(err);
+        throw err;
       }
     };
-    reader.onerror = function(evt) {
-      console.log("error reading file");
-    };
+    // reader.onerror = function(evt) {
+    //   console.log("error reading file");
+    // };
   }
 };
 

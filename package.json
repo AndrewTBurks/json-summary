@@ -1,6 +1,6 @@
 {
   "name": "json-summary",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "A simple JSON summarizer to extract the structure from a JSON object",
   "keywords": [
     "JSON",
