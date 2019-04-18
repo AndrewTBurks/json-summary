@@ -12,6 +12,10 @@
   "module": "dist/json-summary.esm.js",
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
+  "files":[
+    "/dist",
+    "index.js"
+  ],
   "scripts": {
     "jest": "jest",
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
