@@ -1,6 +1,6 @@
 {
   "name": "json-summary",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A simple JSON summarizer to extract the structure from a JSON object",
   "keywords": [
     "JSON",
@@ -11,6 +11,10 @@
   "main": "index.js",
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
+  "files": [
+    "/dist",
+    "index.js"
+  ],
   "scripts": {
     "jest": "jest",
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
@@ -41,5 +45,5 @@
     "sass": "^1.18.0"
   },
   "dependencies": {},
-  "eslintConfig": "./.eslintrc.json" 
+  "eslintConfig": "./.eslintrc.json"
 }
