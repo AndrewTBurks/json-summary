@@ -22,7 +22,7 @@ body {
 
 .title {
   color: var(--solarized-base02);
-  text-decoration: underline;
+  /* text-decoration: underline; */
   /* border-bottom: 2px solid var(--solarized-base02); */
   font-weight: bolder;
   text-align: center;
@@ -324,7 +324,7 @@ body.dark .themePanel {
 }
 
 body.dark .title {
-  color: #61afef;
+  color: #89ca78;
 }
 
 .themeChoice[name="light"] {
