@@ -1,4 +1,4 @@
-// https://andrewtburks.dev/json-summary v0.3.0 Copyright 2019 Andrew Burks
+// https://andrewtburks.dev/json-summary v1.0.0 Copyright 2019 Andrew Burks
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 typeof define === 'function' && define.amd ? define(['exports'], factory) :
