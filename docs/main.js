@@ -1,5 +1,7 @@
 /* global jsonSummary, Dropzone */
 
+let globalTheme = "dark"
+
 let ex1 = {
   name: "val1",
   data: [{ a: 1 }, { a: 6, b: 2 }, { b: null, c: 3 }],
@@ -59,7 +61,7 @@ let outelem0 = document.getElementById("output1");
 sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
 outelem0.innerHTML = jsonSummary.printSummary(summary, {
   startExpanded: true,
-  theme: "dark"
+  theme: globalTheme
 });
 
 addExample(ex1, 2);
@@ -74,7 +76,7 @@ function addExample(data, number) {
   dataelem.innerHTML = JSON.stringify(data, null, "  ");
   outelem.innerHTML = jsonSummary.printSummary(summary, {
     startExpanded: true,
-    theme: "dark"
+    theme: globalTheme
   });
 }
 
@@ -97,7 +99,7 @@ Dropzone.options.upload = {
 
         outElem.innerHTML = jsonSummary.printSummary(summary, {
           startExpanded: false,
-          theme: "dark"
+          theme: globalTheme
         });
       } catch (err) {
         throw err;
@@ -121,11 +123,30 @@ for (let i = 0; i < dataBlocks.length; i++) {
 let themeChoices = document.getElementsByClassName("themeChoice");
 
 for (let i = 0; i < themeChoices.length; i++) {
-  themeChoices[i].onclick = function() {
+  themeChoices[i].onclick = function(e) {
+    e.stopPropagation();
     let themeBlocks = document.getElementsByClassName("theme");
+    let codeBlocks = document.getElementsByClassName("code");
+    let dataBlocks = document.getElementsByClassName("data");
+
+    globalTheme = this.name;
 
     for (let j = 0; j < themeBlocks.length; j++) {
-      themeBlocks[j].className = "theme " + themeChoices[i].name;
+      themeBlocks[j].className = "theme " + this.name;
     }
+
+    for (let j = 0; j < codeBlocks.length; j++) {
+      codeBlocks[j].className = "code " + this.name;
+    }
+
+    for (let j = 0; j < dataBlocks.length; j++) {
+      dataBlocks[j].className = "data " + this.name;
+    }
+
+    document.body.className = this.name;
   };
 }
+
+document.getElementById("themePanel").onclick = function() {
+  this.classList.toggle("open");
+};

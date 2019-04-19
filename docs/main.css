@@ -25,17 +25,20 @@ body {
   text-decoration: underline;
   /* border-bottom: 2px solid var(--solarized-base02); */
   font-weight: bolder;
+  text-align: center;
 }
 
 /* #introtext {
   max-width: 100;
 } */
 
-a {
+.links a {
+  font-weight: bold;
+  font-size: 18px;
   color: var(--solarized-blue);
 }
 
-a:visited {
+.links a:visited {
   color: var(--solarized-violet);
 }
 
@@ -44,8 +47,9 @@ h3 {
 }
 
 .links {
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -87,7 +91,7 @@ h3 {
 
   max-height: 38px;
 
-  transition: max-height 0.5s, background 0.5s;
+  transition: max-height 0.5s;
 }
 
 .data::after {
@@ -127,7 +131,7 @@ h3 {
 
   align-items: stretch;
 
-  padding: 10px 0;
+  padding: 0 0 10px 0;
 
   border-bottom: 1px solid var(--solarized-base1);
 }
@@ -172,17 +176,42 @@ h3 {
   display: flex;
   flex-direction: column;
 
-  background: #fff9;
-  border: 1.25px solid #0004;
+  align-items: stretch;
+
+  background: #f0f0f0aa;
+  border: 1px solid #0004;
 
   border-radius: 0 0 0 10px;
+  border-width: 0 0 2px 2px;
+  cursor: pointer;
 }
 
 .themePanel .themesTitle {
+  position: relative;
   margin-bottom: 5px;
+  text-align: center;
+  padding-right: 20px;
+}
+
+.themePanel .themesTitle:after {
+  content: "\25B2";
+  position: absolute;
+
+  top: 0px;
+  right: 0px;
+
+  transform: rotate(-180deg);
+
+  transition: transform 0.5s, top 0.5s;
+}
+
+.themePanel.open .themesTitle:after {
+  transform: rotate(0deg);
+  top: -2px;
 }
 
 .themeChoice {
+  display: none;
   border-radius: 4px;
   background: #e0e0e0;
   border: 1px solid black;
@@ -191,7 +220,21 @@ h3 {
 
   font-weight: bold;
   font-size: 14px;
+
+  box-shadow: 0 0 5px #fff9;
+
+  cursor: pointer;
 }
+
+.themePanel.open .themeChoice {
+  display: block;
+}
+
+.themeChoice .param {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* ====== theme color stuff ====== */
 
 .themeChoice[name="monokai"] {
   border: 2px solid rgb(117, 113, 94);
@@ -199,7 +242,42 @@ h3 {
   color: #fc9867;
 }
 
-.themeChoice[name="monokai"] .accent {
+.themeChoice[name="monokai"] .param {
+  color: #a9dc76;
+}
+
+.code.monokai {
+  background: #272822;
+  border: 2px solid rgb(117, 113, 94);
+  color: #ffd866;
+}
+
+.data.monokai {
+  background: #272822;
+  border: 2px solid rgb(117, 113, 94);
+  color: #a9dc76;
+}
+
+body.monokai {
+  color: rgb(248, 248, 242);
+  background: #1A1B15;
+}
+
+body.monokai .table-header th {
+  border-bottom: 2px solid rgb(117, 113, 94);
+}
+
+body.monokai .dropzone {
+  background: #272822;
+  border-color: #a9dc76;
+}
+
+body.monokai .themePanel {
+  background: #272822aa;
+  border-color: #a9dc76;
+}
+
+body.monokai .title {
   color: #a9dc76;
 }
 
@@ -209,8 +287,44 @@ h3 {
   color: #61afef;
 }
 
-.themeChoice[name="dark"] .accent {
+.themeChoice[name="dark"] .param {
   color: #89ca78;
+}
+
+.code.dark {
+  background: #282c34;
+  border: 2px solid #abb2bf;
+  color: #e5c07b;
+}
+
+.data.dark {
+  background: #282c34;
+  border: 2px solid #abb2bf;
+  color: #89ca78;
+}
+
+body.dark {
+  color: #abb2bf;
+  /* background: #282c34; */
+  background: #1B1F27;
+}
+
+body.dark .table-header th {
+  border-bottom: 2px solid #abb2bf;
+}
+
+body.dark .dropzone {
+  background: #282c34;
+  border-color: #61afef;
+}
+
+body.dark .themePanel {
+  background: #282c34aa;
+  border-color: #61afef;
+}
+
+body.dark .title {
+  color: #61afef;
 }
 
 .themeChoice[name="light"] {
@@ -219,7 +333,43 @@ h3 {
   color: #6c71c4;
 }
 
-.themeChoice[name="light"] .accent {
+.themeChoice[name="light"] .param {
+  color: #2aa198;
+}
+
+.code.light {
+  background: #fdf6e3;
+  border: 2px solid #839496;
+  color: #073642;
+}
+
+.data.light {
+  background: #fdf6e3;
+  border: 2px solid #839496;
+  color: #2aa198;
+}
+
+body.light {
+  color: #073642;
+  /* background: #282c34; */
+  background: #FFFFF0;
+}
+
+body.light .table-header th {
+  border-bottom: 2px solid #839496;
+}
+
+body.light .dropzone {
+  background: #fdf6e3;
+  border-color: #2aa198;
+}
+
+body.light .themePanel {
+  background: #fdf6e3aa;
+  border-color: #2aa198;
+}
+
+body.light .title {
   color: #2aa198;
 }
 
@@ -229,7 +379,42 @@ h3 {
   color: #9966b8;
 }
 
-.themeChoice[name="abyss"] .accent {
+.themeChoice[name="abyss"] .param {
+  color: #f280d0;
+}
+
+.code.abyss {
+  background: #181f2f;
+  border: 2px solid #384887;
+  color: #ddbb88;
+}
+
+.data.abyss {
+  background: #181f2f;
+  border: 2px solid #384887;
+  color: #f280d0;
+}
+
+body.abyss {
+  color: #bbbbbb;
+  background: #0B1222;
+}
+
+body.abyss .table-header th {
+  border-bottom: 2px solid #384887;
+}
+
+body.abyss .dropzone {
+  background: #181f2f;
+  border-color: #f280d0;
+}
+
+body.abyss .themePanel {
+  background: #181f2faa;
+  border-color: #f280d0;
+}
+
+body.abyss .title {
   color: #f280d0;
 }
 

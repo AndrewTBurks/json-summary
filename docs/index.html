@@ -16,28 +16,27 @@
 
   <link rel="stylesheet" href="main.css">
 </head>
-<body>
-  <div class="themePanel">
-    <span class="themesTitle">
-      Choose a theme
-    </span>
-    <button class="themeChoice" name="light">Solarized <span class="accent">Light</span></button>
-    <button class="themeChoice" name="dark">One <span class="accent">Dark</span></button>
-    <button class="themeChoice" name="monokai">Monokai <span class="accent">Pro</span></button>
-    <!-- <button class="themeChoice" name="night-owl">Night Owl</button> -->
-    <button class="themeChoice" name="abyss">Abyss <span class="accent">Theme</span></button>
-  </div>
-  <div>
-    <h1 class="title">json-summary</h1>
-    <div class="links">
-      <a href="#usage">Usage</a>
-      <a href="#tryIt">Try It</a>
-      <a href="#examples">Examples</a>
-      <a href="https://github.com/AndrewTBurks/json-summary">GitHub</a>
-    </div>
-  </div>
+<body class="dark">
   <div id="content">
-    <h3 id="intro">Intro</h3>
+    <div style="width: 100%;">
+      <h1 class="title">json-summary</h1>
+      <div class="links">
+        <a href="#usage">Usage</a>
+        <a href="#tryIt">Try It</a>
+        <a href="#examples">Examples</a>
+        <a href="https://github.com/AndrewTBurks/json-summary">GitHub</a>
+      </div>
+      <div style="text-align: center; margin-top: 15px;">
+        <img alt="npm version" src="https://img.shields.io/npm/v/json-summary.svg?style=for-the-badge">
+        <img alt="npm downloads" src="https://img.shields.io/npm/dt/json-summary.svg?style=for-the-badge">
+        <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/json-summary.svg?style=for-the-badge">
+      </div>
+      <div style="text-align: center; margin-bottom: 10px;">
+        <img alt="Travis (.com)" src="https://img.shields.io/travis/com/AndrewTBurks/json-summary.svg?style=for-the-badge">
+        <img alt="Coveralls github" src="https://img.shields.io/coveralls/github/AndrewTBurks/json-summary.svg?style=for-the-badge">
+      </div>
+    </div>
+    <h2 id="intro">Intro</h2>
     <div id="introtext">
       <span style="font-weight: bold; font-family: 'Courier New', Courier, monospace">json-summary</span> was created to simplify the display of complex data to users.
       <br><br>
@@ -48,20 +47,17 @@
         <li>Smaller representation is better for interface and large datasets on a server</li>
       </ul>
     </div>
-    <h3 id="usage">Usage</h3>
+    <h2 id="usage">Usage</h2>
     <div class="section">
       <h4>Adding to your project</h4>
-      <p>in browser <span style="font-family: monospace">(unpkg)</span></p>
-      <div class="code">&lt;link rel="stylesheet" href="https://unpkg.com/json-summary@0.3.0/dist/summarizer.css"&gt;
+      <p>in browser using <span style="font-family: monospace">unpkg</span></p>
+      <div class="code dark">&lt;link rel="stylesheet" href="https://unpkg.com/json-summary@1.0.0/dist/summarizer.css"&gt;
 
-&lt;script src="https://unpkg.com/json-summary@0.3.0/dist/json-summary.min.js"&gt;
+&lt;script src="https://unpkg.com/json-summary@1.0.0/dist/json-summary.min.js"&gt;
       </div>
       <p>in node <span style="font-family: monospace">(npm install json-summary)</span></p>
-      <div class="code">const jsonSummary = require("json-summary");</div>
-      <h4>Creation:</h4>
-      <div class="code">let jsonSum = new jsonSummary();</div>
-
-      <h4>Creation (with default options):</h4>
+      <div class="code dark">const jsonSum = require("json-summary");</div>
+      <!-- <h4>Creation (with default options):</h4>
       <div class="code" style="white-space:pre-wrap;">let jsonSum = new jsonSummary({
   arraySampleCount: 10,
   theme: "dark",
@@ -69,60 +65,75 @@
   indentCount: 2,
   showExampleValue: true,
   startExpanded: false
-});</div>
+});</div> -->
 
       <!-- <p>Options:</p> -->
+
+      <h4>Summarizing Object Structure</h4>
+
+      <!-- <h4>Summary Information <span style="font-family:'Courier New', Courier, monospace">(summary)</span></h4> -->
+      <p>The code to summarize data where <code>data</code> is a JSON dataset and <code>options</code> is an object of summary parameters.</p>
+      <div class="code dark" style="white-space:pre-wrap;">let summary = jsonSum.summarize(data, options);</div>
+      <p>How the object summary looks:</p>
+      <div id="summary1" class="data dark"></div>
+      <p>Supported summary parameters:</p>
       <table id="option-table">
-        <tr class="table-header"><th>Option</th><th>Type</th><th>Description</th></tr>
+        <tr class="table-header"><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">arraySampleCount</td>
           <td style="font-family: 'Courier New', Courier, monospace">Number</td>
+          <td style="font-family: 'Courier New', Courier, monospace">10</td>
           <td>the number of elements to sample and summarize for arrays</td>
         </tr>
+      </table>
+
+      <h4>Displaying Interactive Summary Output</h4>
+
+      <!-- <h4>Interactive Summary <span style="font-family:'Courier New', Courier, monospace">(output)</span></h4> -->
+      <p>The code to summarize data where
+        <code>summary</code> is the previously produced summary and
+        <code>options</code> is an object of display parameters.</p>
+      <div class="code dark" style="white-space:pre-wrap;">let htmlString = jsonSum.printSummary(summary, options);</div>
+      <p>How the ouput <code>htmlString</code> behaves when added to the page:</p>
+      <div id="output1" class="summary"></div>
+      <p>Supported display parameters:</p>
+      <table id="option-table">
+        <tr class="table-header"><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">theme</td>
           <td style="font-family: 'Courier New', Courier, monospace">String</td>
-          <td>"light" or "dark" theme for output</td>
+          <td style="font-family: 'Courier New', Courier, monospace">dark</td>
+          <td>light, dark, monokai, or abyss</td>
         </tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">indentation</td>
           <td style="font-family: 'Courier New', Courier, monospace">String</td>
+          <td style="font-family: 'Courier New', Courier, monospace">" "</td>
           <td>the character used for indentation whitespace</td>
         </tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">identCount</td>
           <td style="font-family: 'Courier New', Courier, monospace">Number</td>
+          <td style="font-family: 'Courier New', Courier, monospace">2</td>
           <td>the number of whitespace characters to indent with per nested level</td>
         </tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">showExampleValue</td>
           <td style="font-family: 'Courier New', Courier, monospace">Boolean</td>
+          <td style="font-family: 'Courier New', Courier, monospace">true</td>
           <td>Whether or not the example values should be displayed for basic types</td>
         </tr>
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">startExpanded</td>
           <td style="font-family: 'Courier New', Courier, monospace">Boolean</td>
+          <td style="font-family: 'Courier New', Courier, monospace">false</td>
           <td>whether the sections of the object should begin open or closed</td>
         </tr>
       </table>
 
-      <h4>Summarizing:</h4>
-      <div class="code" style="white-space:pre-wrap;">let data = {
-  a: [2, 8, 24],
-  b: {x: "y"}
-};
-
-let summary = jsonSum.summarize(data); // object
-let output = jsonSum.printSummary(summary); // HTML string</div>
-      <h4>Summary Information <span style="font-family:'Courier New', Courier, monospace">(summary)</span></h4>
-      <div id="summary1" class="data"></div>
-      <h4>Interactive Summary <span style="font-family:'Courier New', Courier, monospace">(output)</span></h4>
-      <div id="output1" class="summary"></div>
-
-
     </div>
 
-    <h3 id="tryIt">Try it yourself!</h3>
+    <h2 id="tryIt">Try it yourself!</h2>
     <div class="section">
       <h4>Upload your data file</h4>
       <form id="upload" class="dropzone"></form>
@@ -135,20 +146,20 @@ let output = jsonSum.printSummary(summary); // HTML string</div>
 
     </div>
 
-    <h3 id="examples">More Examples</h3>
+    <h2 id="examples">More Examples</h2>
     <div class="section example">
       <h4>Raw Data</h4>
-      <div id="data2" class="data"></div>
+      <div id="data2" class="data dark"></div>
       <h4>Interactive Summary</h4>
       <p>The bars next to the keys <span style="font-weight: bold; font-family: 'Courier New', Courier, monospace">a, b, c</span> represent the
         ratio at which these three keys were observed on objects sampled from the array <span
           style="font-weight: bold; font-family: 'Courier New', Courier, monospace">data</span></p>
-      <div id="output2" class="summary json-summary-wrapper"></div>
+      <div id="output2" class="summary"></div>
     
     </div>
     <div class="section example">
       <h4>Raw Data</h4>
-      <div id="data3" class="data"></div>
+      <div id="data3" class="data dark"></div>
       <h4>Interactive Summary</h4>
       <p>The mean length <span style="font-weight: bold; font-family: 'Courier New', Courier, monospace">(μ = 3.7)</span> represents the average length of the <span
           style="font-weight: bold; font-family: 'Courier New', Courier, monospace">powers</span> array across members sampled</p>
@@ -159,6 +170,17 @@ let output = jsonSum.printSummary(summary); // HTML string</div>
       Copyright 2019 
       <a href="https://andrewtburks.dev">Andrew Burks</a>
     </div>
+  </div>
+
+  <div id="themePanel" class="themePanel">
+    <span class="themesTitle">
+      Choose a theme
+    </span>
+    <button class="themeChoice" name="light">Solarized Light <span class="param">(light)</span></button>
+    <button class="themeChoice" name="dark">One Dark <span class="param">(dark)</span></button>
+    <button class="themeChoice" name="monokai">Monokai Pro <span class="param">(monokai)</span></button>
+    <!-- <button class="themeChoice" name="night-owl">Night Owl</button> -->
+    <button class="themeChoice" name="abyss">Abyss Theme <span class="param">(abyss)</span></button>
   </div>
   
   <script src="main.js"></script>
