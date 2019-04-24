@@ -47,12 +47,16 @@ export default [
   // builds from a single configuration where possible, using
   // an array for the `output` option, where we can specify
   // `file` and `format` for each target)
-  // {
-  //   input: "index",
-  //   external: ["ms"],
-  //   output: [
-  //     { file: pkg.main, format: "cjs" },
-  //     { file: pkg.module, format: "esm", banner: copyright }
-  //   ]
-  // }
+  {
+    input: "index",
+    external: ["ms"],
+    output: [
+      { file: pkg.main, format: "cjs" }
+      //     { file: pkg.module, format: "esm", banner: copyright }
+    ],
+    plugins: [
+      resolve(), // so Rollup can find `ms`
+      commonjs() // so Rollup can convert `ms` to an ES module
+    ]
+  }
 ];

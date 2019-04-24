@@ -1,4 +1,6 @@
-let JsonSummary = require("../index");
+// let JsonSummary = require("../index");
+
+import JsonSummary from "../index";
 
 // let summarizerNoSample = new JsonSummary({arraySampleCount: 0});
 // let summarizerSampled = new JsonSummary({ arraySampleCount: 5 });

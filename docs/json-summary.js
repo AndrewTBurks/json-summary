@@ -1,27 +1,30 @@
 // https://andrewtburks.dev/json-summary v1.0.0 Copyright 2019 Andrew Burks
 (function (global, factory) {
-typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-typeof define === 'function' && define.amd ? define(['exports'], factory) :
-(global = global || self, factory(global.jsonSummary = {}));
-}(this, function (exports) { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+typeof define === 'function' && define.amd ? define(factory) :
+(global = global || self, global.jsonSummary = factory());
+}(this, function () { 'use strict';
 
-var defaults = {
-  arraySampleCount: 10,
-  indentation: " ", // or "\t"
-  indentCount: 2,
-  showExampleValue: true,
-  startExpanded: false,
-  theme: "dark"
-};
+let arraySampleCount = 10,
+indentation = " ", // or "\t"
+indentCount = 2,
+showExampleValue = true,
+startExpanded = false,
+theme = "dark";
 
-let defaultSummOpt = {
-  arraySampleCount: defaults.arraySampleCount
-};
+var defaults = /*#__PURE__*/Object.freeze({
+arraySampleCount: arraySampleCount,
+indentation: indentation,
+indentCount: indentCount,
+showExampleValue: showExampleValue,
+startExpanded: startExpanded,
+theme: theme
+});
 
 // utility function to extract overall json structure without printing entire data object
 function summarizeJSON(data, {
-  arraySampleCount = defaultSummOpt.arraySampleCount
-} = defaultSummOpt) {
+  arraySampleCount: arraySampleCount$1 = arraySampleCount
+} = defaults) {
   let summary = summarizeItem(data);
 
   // clean up the marking
@@ -41,8 +44,8 @@ function summarizeJSON(data, {
 
         // recurse to items in the array
         if (arr.length) {
-          if (arraySampleCount > 0) {
-            let numToSample = arraySampleCount === "all" ? arr.length : Math.min(arraySampleCount, arr.length);
+          if (arraySampleCount$1 > 0) {
+            let numToSample = arraySampleCount$1 === "all" ? arr.length : Math.min(arraySampleCount$1, arr.length);
             let sampledItems = {};
 
             // summarized.count = numToSample;
@@ -289,30 +292,30 @@ function summarizeJSON(data, {
   }
 }
 
-var summarize = summarizeJSON;
+// let defaults = require("./defaults");
 
-let defaultPrintOpt = {
-  indentation: defaults.indentation, // or "\t"
-  indentCount: defaults.indentCount,
-  showExampleValue: defaults.showExampleValue,
-  startExpanded: defaults.startExpanded,
-  theme: defaults.theme
-};
+// let defaultPrintOpt = {
+//   indentation: defaults.indentation, // or "\t"
+//   indentCount: defaults.indentCount,
+//   showExampleValue: defaults.showExampleValue,
+//   startExpanded: defaults.startExpanded,
+//   theme: defaults.theme
+// };
 
 // utility function to stringify the summary output from summarizeJSON
 function printSummarizedJSON(
   summary,
   {
-    indentation = defaultPrintOpt.indentation, // or "\t"
-    indentCount = defaultPrintOpt.indentCount,
-    showExampleValue = defaultPrintOpt.showExampleValue,
-    startExpanded = defaultPrintOpt.startExpanded,
-    theme = defaultPrintOpt.theme
-  } = defaultPrintOpt
+    indentation: indentation$1 = indentation, // or "\t"
+    indentCount: indentCount$1 = indentCount,
+    showExampleValue: showExampleValue$1 = showExampleValue,
+    startExpanded: startExpanded$1 = startExpanded,
+    theme: theme$1 = theme
+  } = defaults
 ) {
   // start at 0 indentation
   return (
-    `<div class="theme ${theme}"><div class='json-summary-wrapper'>` +
+    `<div class="theme ${theme$1}"><div class='json-summary-wrapper'>` +
     printSummaryLevel(summary, 0) +
     `<div></div>`
   );
@@ -338,7 +341,7 @@ function printSummarizedJSON(
         let childStringCombined = "\n";
 
         for (let i = 0; i < data.keys.length; i++) {
-          childStringCombined += indentation.repeat((l + 1) * indentCount);
+          childStringCombined += indentation$1.repeat((l + 1) * indentCount$1);
 
           childStringCombined += wrapInHTML(data.keys[i], "name") + ": ";
 
@@ -357,7 +360,7 @@ function printSummarizedJSON(
           childStringCombined += "\n";
         }
 
-        childStringCombined += indentation.repeat(l * indentCount);
+        childStringCombined += indentation$1.repeat(l * indentCount$1);
 
         string += wrapInHTML(childStringCombined, "child");
       }
@@ -379,13 +382,13 @@ function printSummarizedJSON(
           data.items["0"].type === "Object" || data.items["0"].type === "Array";
 
         if (needsNewlines) {
-          string += "\n" + indentation.repeat((l + 1) * indentCount);
+          string += "\n" + indentation$1.repeat((l + 1) * indentCount$1);
         }
 
         string += printSummaryLevel(data.items["0"], l + 1, data.count);
 
         if (needsNewlines) {
-          string += "\n" + indentation.repeat(l * indentCount);
+          string += "\n" + indentation$1.repeat(l * indentCount$1);
         }
       }
 
@@ -399,7 +402,7 @@ function printSummarizedJSON(
         string += wrapInHTML(data.type, "type");
       }
 
-      if (showExampleValue) {
+      if (showExampleValue$1) {
         string += wrapInHTML(data.example, "value", data.type);
         data.count > 1 &&
           data.range &&
@@ -426,9 +429,9 @@ function printSummarizedJSON(
       circular: () =>
         `<span class="json-summary json-summary-circular">${value}</span>`,
       layer: () => `<span class="json-summary json-summary-checkbox ${
-        startExpanded ? "checked" : ""
+        startExpanded$1 ? "checked" : ""
       }">
-              <input type="checkbox" ${startExpanded ? "checked" : ""}>
+              <input type="checkbox" ${startExpanded$1 ? "checked" : ""}>
               <span class="json-summary-checkboxmarker" onclick="(function(me){
                 me.parentNode.classList.toggle('checked');
               })(this)"></span>
@@ -446,23 +449,16 @@ function printSummarizedJSON(
     )}%"><div class="json-summary json-summary-percentage" style="width:${percentage}%;"></div></div>`;
   }
 }
+// module.exports = printSummarizedJSON;
 
-var printSummary = printSummarizedJSON;
+// https://andrewtburks.dev/json-summary Copyright 2019 Andrew Burks
 
-var jsonSummary = {
-  defaults: defaults,
-  summarize: summarize,
-  printSummary: printSummary
+var index = {
+  defaults,
+  summarize: summarizeJSON,
+  printSummary: printSummarizedJSON
 };
-var jsonSummary_1 = jsonSummary.defaults;
-var jsonSummary_2 = jsonSummary.summarize;
-var jsonSummary_3 = jsonSummary.printSummary;
 
-exports.default = jsonSummary;
-exports.defaults = jsonSummary_1;
-exports.printSummary = jsonSummary_3;
-exports.summarize = jsonSummary_2;
-
-Object.defineProperty(exports, '__esModule', { value: true });
+return index;
 
 }));

@@ -1,7 +1,11 @@
-"use strict";
+// https://andrewtburks.dev/json-summary Copyright 2019 Andrew Burks
 
-module.exports = {
-  defaults: require("./src/defaults"),
-  summarize: require("./src/summarize"),
-  printSummary: require("./src/printSummary")
+import * as defaults from "./src/defaults";
+import summarize from "./src/summarize";
+import printSummary from "./src/printSummary";
+
+export default {
+  defaults,
+  summarize,
+  printSummary
 };

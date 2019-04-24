@@ -1,12 +1,14 @@
-let defaults = require("./defaults");
+// let defaults = require("./defaults");
 
-let defaultPrintOpt = {
-  indentation: defaults.indentation, // or "\t"
-  indentCount: defaults.indentCount,
-  showExampleValue: defaults.showExampleValue,
-  startExpanded: defaults.startExpanded,
-  theme: defaults.theme
-};
+import * as defaultPrintOpt from "./defaults";
+
+// let defaultPrintOpt = {
+//   indentation: defaults.indentation, // or "\t"
+//   indentCount: defaults.indentCount,
+//   showExampleValue: defaults.showExampleValue,
+//   startExpanded: defaults.startExpanded,
+//   theme: defaults.theme
+// };
 
 // utility function to stringify the summary output from summarizeJSON
 function printSummarizedJSON(
@@ -156,4 +158,5 @@ function printSummarizedJSON(
   }
 }
 
-module.exports = printSummarizedJSON;
+export default printSummarizedJSON;
+// module.exports = printSummarizedJSON;

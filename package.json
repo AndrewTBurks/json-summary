@@ -8,7 +8,8 @@
     "object",
     "summary"
   ],
-  "main": "index.js",
+  "main": "dist/json-summary-node.js",
+  "module": "index.js",
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
   "files": [
@@ -35,6 +36,10 @@
   },
   "homepage": "https://andrewtburks.dev/json-summary",
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-jest": "^24.7.1",
+    "babel-loader": "^8.0.5",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
@@ -43,6 +48,16 @@
     "rollup-plugin-node-resolve": "^4.2.1",
     "rollup-plugin-terser": "^4.0.4",
     "sass": "^1.18.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "./node_modules/babel-jest"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/env"
+    ]
   },
   "dependencies": {},
   "eslintConfig": "./.eslintrc.json"

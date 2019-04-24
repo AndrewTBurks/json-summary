@@ -1,10 +1,6 @@
 "use strict";
 
-let defaults = require("./defaults")
-
-let defaultSummOpt = {
-  arraySampleCount: defaults.arraySampleCount
-};
+import * as defaultSummOpt from "./defaults";
 
 // utility function to extract overall json structure without printing entire data object
 function summarizeJSON(data, {
@@ -277,4 +273,4 @@ function summarizeJSON(data, {
   }
 }
 
-module.exports = summarizeJSON;
+export default summarizeJSON;
