@@ -17,8 +17,9 @@
     "index.js"
   ],
   "scripts": {
+    "lint": "eslint -c .eslintrc.json 'index.js' 'src/**'",
     "jest": "jest",
-    "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test": "npm run lint && jest --coverage --coverageReporters=text-lcov | coveralls",
     "prepublish": "npm run build && npm test",
     "build": "rollup -c && cp dist/json-summary.js docs/json-summary.js && sass style/main.scss dist/summarizer.css && cp dist/summarizer.css docs/summarizer.css"
   },
