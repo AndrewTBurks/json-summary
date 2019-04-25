@@ -332,6 +332,8 @@ test("handles sampling object", () => {
 test("can output html string", () => {
   let object = testData;
 
+  object.f.w = object;
+
   let summary = JsonSummary.summarize(object);
 
   let frag = JSDOM.fragment(JsonSummary.printSummary(summary));
