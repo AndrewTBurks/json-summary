@@ -2,6 +2,10 @@
 
 import JsonSummary from "../index";
 
+import { JSDOM } from "jsdom";
+
+import testData from "./testdata.json";
+
 // let summarizerNoSample = new JsonSummary({arraySampleCount: 0});
 // let summarizerSampled = new JsonSummary({ arraySampleCount: 5 });
 
@@ -323,4 +327,18 @@ test("handles sampling object", () => {
   };
 
   expect(summary).toMatchObject(expected);
+});
+
+test("can output html string", () => {
+  let object = testData;
+
+  let summary = JsonSummary.summarize(object);
+
+  let frag = JSDOM.fragment(JsonSummary.printSummary(summary));
+
+  // has a theme
+  expect(frag.querySelector(".theme")).not.toBeNull();
+
+  // has a json-summary-wrapper
+  expect(frag.querySelector(".json-summary-wrapper")).not.toBeNull();
 });
