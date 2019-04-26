@@ -15,14 +15,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
   <link rel="stylesheet" href="main.css">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102895793-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-102895793-2');
+  </script>
+
 </head>
 <body class="dark">
   <div id="content">
     <div style="width: 100%;">
       <h1 class="title">json-summary</h1>
       <div class="links">
-        <a href="#usage">Usage</a>
         <a href="#tryIt">Try It</a>
+        <a href="#usage">Usage</a>
         <a href="#examples">Examples</a>
         <a href="https://github.com/AndrewTBurks/json-summary">GitHub</a>
       </div>
@@ -38,14 +49,54 @@
     </div>
     <h2 id="intro">Intro</h2>
     <div id="introtext">
-      <span style="font-weight: bold; font-family: 'Courier New', Courier, monospace">json-summary</span> was created to simplify the display of complex data to users.
+      <code>
+        <strong>
+          json-summary
+        </strong>
+      </code> was created to simplify the communication of complex, freeform data to users.
       <br><br>
-      The module attempts to extract important structural information from a JSON object in order to only show users the most important information relevant to their development.
-      Among its benefits:
+      <code>
+        <strong>
+          json-summary
+        </strong>
+      </code> extracts important structural information from a JSON object to simplify the use of and development with a dataset.
+      <p>
+        Among its benefits:
+      </p>
       <ul>
-        <li>Removes repetitive information in datasets (e.g. long arrays)</li>
-        <li>Smaller representation is better for interface and large datasets on a server</li>
+        <li><strong>Zero Dependencies</strong></li>
+        <li>Eliminates repetitiveness for long datasets</li>
+        <li>Sampling helps capture holes in sparse datasets</li>
+        <li>The smaller, summary representation is better to send over the network</li>
       </ul>
+      <p>
+        Features:
+      </p>
+      <ul>
+        <li>Traverses JSON data to extract its structure</li>
+        <li>Saves the data types from each substructure</li>
+        <li>Catches and marks circular references</li>
+        <li>Samples data from arrays to handle sparsity</li>
+        <li>Produces HTML strings for the interactive exploration of the summaries</li>
+        <li>Displays sample values and data ranges for attributes</li>
+        <li>Visulizes the rate of occurence of attributes in sparse data</li>
+        <li>Implements <strong>four</strong> themes to match your projects</li>
+      </ul>
+    </div>
+
+
+
+    <h2 id="tryIt">Try it yourself!</h2>
+    <div class="section">
+      <h4>Upload a JSON file:</h4>
+      <form id="upload" class="dropzone"></form>
+      <h4>Interactive Summary</h4>
+      <div id="outputUser" class="summary">
+        <div style="text-align: center">
+          <span style="font-family:'Courier New', Courier, monospace; font-style: italic;">Your file summarized with json-summary ...</span>
+        </div>
+      </div>
+    
     </div>
     <h2 id="usage">Usage</h2>
     <div class="section">
@@ -57,21 +108,9 @@
       </div>
       <p>in node <span style="font-family: monospace">(npm install json-summary)</span></p>
       <div class="code dark">const jsonSum = require("json-summary");</div>
-      <!-- <h4>Creation (with default options):</h4>
-      <div class="code" style="white-space:pre-wrap;">let jsonSum = new jsonSummary({
-  arraySampleCount: 10,
-  theme: "dark",
-  indentation: " ",
-  indentCount: 2,
-  showExampleValue: true,
-  startExpanded: false
-});</div> -->
-
-      <!-- <p>Options:</p> -->
 
       <h4>Summarizing Object Structure</h4>
 
-      <!-- <h4>Summary Information <span style="font-family:'Courier New', Courier, monospace">(summary)</span></h4> -->
       <p>The code to summarize data where <code>data</code> is a JSON dataset and <code>options</code> is an object of summary parameters.</p>
       <div class="code dark" style="white-space:pre-wrap;">let summary = jsonSum.summarize(data, options);</div>
       <p>How the object summary looks:</p>
@@ -102,7 +141,7 @@
         <tr>
           <td style="font-family: 'Courier New', Courier, monospace">theme</td>
           <td style="font-family: 'Courier New', Courier, monospace">String</td>
-          <td style="font-family: 'Courier New', Courier, monospace">dark</td>
+          <td style="font-family: 'Courier New', Courier, monospace">"dark"</td>
           <td>light, dark, monokai, or abyss</td>
         </tr>
         <tr>
@@ -130,19 +169,6 @@
           <td>whether the sections of the object should begin open or closed</td>
         </tr>
       </table>
-
-    </div>
-
-    <h2 id="tryIt">Try it yourself!</h2>
-    <div class="section">
-      <h4>Upload your data file</h4>
-      <form id="upload" class="dropzone"></form>
-      <h4>Interactive Summary</h4>
-      <div id="outputUser" class="summary">
-        <div style="text-align: center">
-          <span style="font-family:'Courier New', Courier, monospace; font-style: italic;">Your file summarized with json-summary ...</span>
-        </div>
-      </div>
 
     </div>
 

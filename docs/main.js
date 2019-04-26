@@ -95,7 +95,7 @@ Dropzone.options.upload = {
 
         let outElem = document.getElementById("outputUser");
 
-        let summary = jsonSummary.summarize(data, { arraySampleCount: 50 });
+        let summary = jsonSummary.summarize(data, { arraySampleCount: 100 });
 
         outElem.innerHTML = jsonSummary.printSummary(summary, {
           startExpanded: false,
