@@ -15,10 +15,10 @@ test("handles string", () => {
   let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
-    "example": "Test",
-    "type": "string",
-    "count": 1,
-    "range": [4, 4]
+    example: "Test",
+    type: "string",
+    count: 1,
+    range: [4, 4],
   });
 });
 
@@ -30,8 +30,8 @@ test("handles number", () => {
   expect(summary).toEqual({
     example: 20.2,
     type: "number",
-    "count": 1,
-    "range": [20.2, 20.2]
+    count: 1,
+    range: [20.2, 20.2],
   });
 });
 
@@ -43,7 +43,7 @@ test("handles boolean", () => {
   expect(summary).toEqual({
     count: 1,
     example: true,
-    type: "boolean"
+    type: "boolean",
   });
 });
 
@@ -55,7 +55,7 @@ test("handles null", () => {
   expect(summary).toEqual({
     count: 1,
     example: null,
-    type: "object"
+    type: "object",
   });
 });
 
@@ -67,7 +67,7 @@ test("handles undefined", () => {
   expect(summary).toEqual({
     count: 1,
     example: undefined,
-    type: "undefined"
+    type: "undefined",
   });
 });
 
@@ -84,11 +84,11 @@ test("handles array", () => {
         count: 1,
         example: "apple",
         type: "string",
-        range: [5, 5]
-      }
+        range: [5, 5],
+      },
     },
     length: 3,
-    type: "Array"
+    type: "Array",
   });
 
   expect(summary2).toEqual({
@@ -98,29 +98,29 @@ test("handles array", () => {
         count: 3,
         example: "apple",
         type: "string",
-        range: [5, 10]
-      }
+        range: [5, 10],
+      },
     },
     length: 3,
-    type: "Array"
+    type: "Array",
   });
 });
 
-test('handles object', () => {
+test("handles object", () => {
   let object = { a: 1 };
 
   let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
 
   expect(summary).toEqual({
-    "count": 1,
-    "items": {a: {count: 1, type: "number", range: [1, 1], example: 1}},
-    "keys": ["a"],
-    "type": "Object"
+    count: 1,
+    items: { a: { count: 1, type: "number", range: [1, 1], example: 1 } },
+    keys: ["a"],
+    type: "Object",
   });
 });
 
 test("handles circular reference", () => {
-  let object = {"x": 1};
+  let object = { x: 1 };
   object.y = object;
 
   let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
@@ -128,25 +128,25 @@ test("handles circular reference", () => {
   expect(summary).toEqual({
     count: 1,
     items: {
-      "x": {
+      x: {
         count: 1,
         example: 1,
         type: "number",
-        range: [1, 1]
+        range: [1, 1],
       },
-      "y": {
+      y: {
         circular: true,
-        type: "Object"
-      }
+        type: "Object",
+      },
     },
     keys: ["x", "y"],
-    type: "Object"
+    type: "Object",
   });
 });
 
 test("handles empty array", () => {
   let object = {
-    a: []
+    a: [],
   };
 
   let summary = JsonSummary.summarize(object, { arraySampleCount: 0 });
@@ -158,13 +158,13 @@ test("handles empty array", () => {
         count: 1,
         length: 0,
         items: {
-          0: undefined
+          0: undefined,
         },
-        type: "Array"
-      }
+        type: "Array",
+      },
     },
     keys: ["a"],
-    type: "Object"
+    type: "Object",
   });
 });
 
@@ -184,9 +184,9 @@ test("handles sampling string", () => {
         count: 5,
         example: expect.any(String),
         type: "string",
-        range: [4, 10]
-      }
-    }
+        range: [4, 10],
+      },
+    },
   };
 
   expect(summary).toMatchObject(expected);
@@ -206,9 +206,9 @@ test("handles sampling number", () => {
         example: expect.any(Number),
         type: "number",
         count: 5,
-        range: [18.5, 99.9]
-      }
-    }
+        range: [18.5, 99.9],
+      },
+    },
   };
 
   expect(summary).toMatchObject(expected);
@@ -227,22 +227,16 @@ test("handles sampling boolean", () => {
       0: {
         count: 5,
         example: expect.any(Boolean),
-        type: "boolean"
-      }
-    }
+        type: "boolean",
+      },
+    },
   };
 
   expect(summary).toMatchObject(expected);
 });
 
 test("handles sampling array", () => {
-  let object = [
-    [],
-    [2, 3],
-    [4, 5, 6],
-    [7, 8],
-    [1]
-  ];
+  let object = [[], [2, 3], [4, 5, 6], [7, 8], [1]];
 
   let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
 
@@ -260,11 +254,11 @@ test("handles sampling array", () => {
             type: "number",
             count: 8,
             range: [1, 8],
-            example: expect.any(Number)
-          }
-        }
-      }
-    }
+            example: expect.any(Number),
+          },
+        },
+      },
+    },
   };
 
   expect(summary).toMatchObject(expected);
@@ -272,11 +266,11 @@ test("handles sampling array", () => {
 
 test("handles sampling object", () => {
   let object = [
-    {a: 1},
-    {b: 2, c: 3},
-    {a: 2, b: null, c: 6},
-    {a: 3, c: 9, d: 12},
-    {d: 2, e: 5}
+    { a: 1 },
+    { b: 2, c: 3 },
+    { a: 2, b: null, c: 6 },
+    { a: 3, c: 9, d: 12 },
+    { d: 2, e: 5 },
   ];
 
   let summary = JsonSummary.summarize(object, { arraySampleCount: 5 });
@@ -291,39 +285,39 @@ test("handles sampling object", () => {
             count: 3,
             example: expect.any(Number),
             range: [1, 3],
-            type: "number"
+            type: "number",
           },
           b: {
             count: 1,
             example: expect.any(Number),
             range: [2, 2],
-            type: "number"
+            type: "number",
           },
           c: {
             count: 3,
             example: expect.any(Number),
             range: [3, 9],
-            type: "number"
+            type: "number",
           },
           d: {
             count: 2,
             example: expect.any(Number),
             range: [2, 12],
-            type: "number"
+            type: "number",
           },
           e: {
             count: 1,
             example: expect.any(Number),
             range: [5, 5],
-            type: "number"
-          }
+            type: "number",
+          },
         },
         keys: ["a", "b", "c", "d", "e"],
-        type: "Object"
-      }
+        type: "Object",
+      },
     },
     length: 5,
-    type: "Array"
+    type: "Array",
   };
 
   expect(summary).toMatchObject(expected);
@@ -343,4 +337,19 @@ test("can output html string", () => {
 
   // has a json-summary-wrapper
   expect(frag.querySelector(".json-summary-wrapper")).not.toBeNull();
+});
+
+test("can output text string", () => {
+  let object = testData;
+
+  object.f.w = object;
+
+  let summary = JsonSummary.summarize(object);
+
+  let text = JsonSummary.printSummary(summary, { asText: true });
+
+  console.log(text);
+
+  expect(text).not.toBeNull();
+  expect(text).toBeDefined();
 });

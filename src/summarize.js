@@ -3,37 +3,40 @@
 import * as defaultSummOpt from "./defaults";
 
 // utility function to extract overall json structure without printing entire data object
-function summarizeJSON(data, {
-  arraySampleCount = defaultSummOpt.arraySampleCount
-} = defaultSummOpt) {
+function summarizeJSON(
+  data,
+  { arraySampleCount = defaultSummOpt.arraySampleCount } = defaultSummOpt
+) {
   let summary = summarizeItem(data);
 
   // clean up the marking
   unmarkObject(data);
 
   return summary;
-  
 
   function summarizeItem(item) {
     let summarize = {
-      Array: arr => {
+      Array: (arr) => {
         let summarized = {
           count: 1,
           type: "Array",
-          length: arr.length
+          length: arr.length,
         };
 
         // recurse to items in the array
         if (arr.length) {
           if (arraySampleCount > 0) {
-            let numToSample = arraySampleCount === "all" ? arr.length : Math.min(arraySampleCount, arr.length);
+            let numToSample =
+              arraySampleCount === "all"
+                ? arr.length
+                : Math.min(arraySampleCount, arr.length);
             let sampledItems = {};
 
             // summarized.count = numToSample;
-  
+
             while (numToSample > 0) {
               let sampleIndex = Math.floor(Math.random() * arr.length);
-  
+
               if (!sampledItems.hasOwnProperty(sampleIndex)) {
                 sampledItems[sampleIndex] = arr[sampleIndex];
                 numToSample--;
@@ -51,29 +54,28 @@ function summarizeJSON(data, {
             let joinedSample = joinSampledArray(summarizedSamples);
 
             summarized.items = {
-              0: joinedSample
+              0: joinedSample,
             };
           } else {
             // sumamrized.count = 1;
             summarized.items = {
-              0: summarizeItem(arr[0])
+              0: summarizeItem(arr[0]),
             };
           }
-
         } else {
           summarized.items = {
-            0: undefined
+            0: undefined,
           };
         }
 
         return summarized;
       },
-      Object: obj => {
+      Object: (obj) => {
         let summarized = {
           count: 1,
           type: "Object",
           keys: Object.keys(obj),
-          items: {}
+          items: {},
         };
 
         for (let key of summarized.keys) {
@@ -82,7 +84,7 @@ function summarizeJSON(data, {
 
         return summarized;
       },
-      Other: data => {
+      Other: (data) => {
         let range;
 
         if (typeof data === "string") {
@@ -95,9 +97,9 @@ function summarizeJSON(data, {
           type: typeof data,
           example: data,
           count: 1,
-          range
+          range,
         };
-      }
+      },
     };
 
     let type = "Other";
@@ -111,7 +113,7 @@ function summarizeJSON(data, {
     if (item && item["*snippets_mark*"]) {
       return {
         type: type,
-        circular: true
+        circular: true,
       };
     } else {
       // marked as visited to make sure it doesn't hit a circular structure
@@ -119,7 +121,7 @@ function summarizeJSON(data, {
         Object.defineProperty(item, "*snippets_mark*", {
           enumerable: false,
           writable: true,
-          configurable: true
+          configurable: true,
         });
         item["*snippets_mark*"] = true;
       }
@@ -147,31 +149,39 @@ function summarizeJSON(data, {
 
     // console.log(joins);
 
-    // return 
+    // return
 
     // assume theyre all a matching type
 
-    let joinableTypes = {Array: true, Object: true, boolean: true, string: true, number: true};
-    let items = itemset.filter(i => joinableTypes[i.type]);
+    let joinableTypes = {
+      Array: true,
+      Object: true,
+      boolean: true,
+      string: true,
+      number: true,
+    };
+    let items = itemset.filter((i) => joinableTypes[i.type]);
 
     if (items.length) {
       let type = items[0].type;
-      return joinItems(items.filter(i => i.type === type), type);
+      return joinItems(
+        items.filter((i) => i.type === type),
+        type
+      );
     } else {
       // idk - no items to join?
       return {
-        count: 0
+        count: 0,
       };
     }
-
   }
 
   function joinItems(itemArr, type) {
-    itemArr = itemArr.filter(i => i.type === type);
+    itemArr = itemArr.filter((i) => i.type === type);
 
     // functions to join items by type
     let joiner = {
-      string: function(items) {
+      string: function (items) {
         // string length range
         let min = items.reduce((acc, item) => {
           return Math.min(acc, item.range[0]);
@@ -185,12 +195,12 @@ function summarizeJSON(data, {
           type: "string",
           example: items[0].example,
           range: [min, max],
-          count: items.reduce((a, i) => a + i.count, 0)
+          count: items.reduce((a, i) => a + i.count, 0),
         };
 
         return joinedString;
       },
-      number: function(items) {
+      number: function (items) {
         let min = items.reduce((acc, item) => {
           return Math.min(acc, item.range[0]);
         }, Infinity);
@@ -203,19 +213,19 @@ function summarizeJSON(data, {
           type: "number",
           example: items[0].example,
           range: [min, max],
-          count: items.reduce((a, i) => a + i.count, 0)
+          count: items.reduce((a, i) => a + i.count, 0),
         };
 
         return joinedNumber;
       },
-      boolean: function(items) {
+      boolean: function (items) {
         return {
           type: "boolean",
           example: items[0].example,
-          count: items.reduce((a, i) => a + i.count, 0)
+          count: items.reduce((a, i) => a + i.count, 0),
         };
       },
-      Object: function(items) {
+      Object: function (items) {
         let masterKeys = {};
 
         for (let obj of items) {
@@ -228,7 +238,12 @@ function summarizeJSON(data, {
           }
         }
 
-        let joinedObject = { type: "Object", keys: [], items: {}, count: items.length };
+        let joinedObject = {
+          type: "Object",
+          keys: [],
+          items: {},
+          count: items.length,
+        };
 
         for (let key of Object.keys(masterKeys)) {
           joinedObject.keys.push(key);
@@ -238,24 +253,41 @@ function summarizeJSON(data, {
 
         return joinedObject;
       },
-      Array: function(items) {
-        let joinedValues = joinSampledArray(items.map(i => i.items[0]).filter(i => i));
+      Array: function (items) {
+        let joinedValues = joinSampledArray(
+          items.map((i) => i.items[0]).filter((i) => i)
+        );
 
         let joinedArray = {
           count: items.length,
           items: {
-            0: joinedValues
+            0: joinedValues,
           },
           length: joinedValues.count / items.length,
-          type: "Array"
+          type: "Array",
         };
 
         return joinedArray;
-      }
+      },
     };
 
     return joiner[type](itemArr);
   }
+
+  // function unmarkObject(obj) {
+  //   if (obj && obj["*snippets_mark*"]) {
+  //     delete obj["*snippets_mark*"];
+
+  //     // recurse to the next level
+  //     if (obj instanceof Array && obj.length) {
+  //       unmarkObject(obj[0]);
+  //     } else if (obj instanceof Object) {
+  //       for (let key of Object.keys(obj)) {
+  //         unmarkObject(obj[key]);
+  //       }
+  //     }
+  //   }
+  // }
 
   function unmarkObject(obj) {
     if (obj && obj["*snippets_mark*"]) {
@@ -263,7 +295,7 @@ function summarizeJSON(data, {
 
       // recurse to the next level
       if (obj instanceof Array && obj.length) {
-        unmarkObject(obj[0]);
+        obj.forEach((o) => unmarkObject(o));
       } else if (obj instanceof Object) {
         for (let key of Object.keys(obj)) {
           unmarkObject(obj[key]);

@@ -1,9 +1,9 @@
-// https://andrewtburks.dev/json-summary v1.1.0 Copyright 2019 Andrew Burks
+// https://andrewtburks.dev/json-summary v1.2.0 Copyright 2020 Andrew Burks
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
 (global = global || self, global.jsonSummary = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
 let arraySampleCount = 10,
 indentation = " ", // or "\t"
@@ -13,6 +13,7 @@ startExpanded = false,
 theme = "dark";
 
 var defaults = /*#__PURE__*/Object.freeze({
+__proto__: null,
 arraySampleCount: arraySampleCount,
 indentation: indentation,
 indentCount: indentCount,
@@ -22,37 +23,40 @@ theme: theme
 });
 
 // utility function to extract overall json structure without printing entire data object
-function summarizeJSON(data, {
-  arraySampleCount: arraySampleCount$1 = arraySampleCount
-} = defaults) {
+function summarizeJSON(
+  data,
+  { arraySampleCount: arraySampleCount$1 = arraySampleCount } = defaults
+) {
   let summary = summarizeItem(data);
 
   // clean up the marking
   unmarkObject(data);
 
   return summary;
-  
 
   function summarizeItem(item) {
     let summarize = {
-      Array: arr => {
+      Array: (arr) => {
         let summarized = {
           count: 1,
           type: "Array",
-          length: arr.length
+          length: arr.length,
         };
 
         // recurse to items in the array
         if (arr.length) {
           if (arraySampleCount$1 > 0) {
-            let numToSample = arraySampleCount$1 === "all" ? arr.length : Math.min(arraySampleCount$1, arr.length);
+            let numToSample =
+              arraySampleCount$1 === "all"
+                ? arr.length
+                : Math.min(arraySampleCount$1, arr.length);
             let sampledItems = {};
 
             // summarized.count = numToSample;
-  
+
             while (numToSample > 0) {
               let sampleIndex = Math.floor(Math.random() * arr.length);
-  
+
               if (!sampledItems.hasOwnProperty(sampleIndex)) {
                 sampledItems[sampleIndex] = arr[sampleIndex];
                 numToSample--;
@@ -70,29 +74,28 @@ function summarizeJSON(data, {
             let joinedSample = joinSampledArray(summarizedSamples);
 
             summarized.items = {
-              0: joinedSample
+              0: joinedSample,
             };
           } else {
             // sumamrized.count = 1;
             summarized.items = {
-              0: summarizeItem(arr[0])
+              0: summarizeItem(arr[0]),
             };
           }
-
         } else {
           summarized.items = {
-            0: undefined
+            0: undefined,
           };
         }
 
         return summarized;
       },
-      Object: obj => {
+      Object: (obj) => {
         let summarized = {
           count: 1,
           type: "Object",
           keys: Object.keys(obj),
-          items: {}
+          items: {},
         };
 
         for (let key of summarized.keys) {
@@ -101,7 +104,7 @@ function summarizeJSON(data, {
 
         return summarized;
       },
-      Other: data => {
+      Other: (data) => {
         let range;
 
         if (typeof data === "string") {
@@ -114,9 +117,9 @@ function summarizeJSON(data, {
           type: typeof data,
           example: data,
           count: 1,
-          range
+          range,
         };
-      }
+      },
     };
 
     let type = "Other";
@@ -130,7 +133,7 @@ function summarizeJSON(data, {
     if (item && item["*snippets_mark*"]) {
       return {
         type: type,
-        circular: true
+        circular: true,
       };
     } else {
       // marked as visited to make sure it doesn't hit a circular structure
@@ -138,7 +141,7 @@ function summarizeJSON(data, {
         Object.defineProperty(item, "*snippets_mark*", {
           enumerable: false,
           writable: true,
-          configurable: true
+          configurable: true,
         });
         item["*snippets_mark*"] = true;
       }
@@ -166,31 +169,39 @@ function summarizeJSON(data, {
 
     // console.log(joins);
 
-    // return 
+    // return
 
     // assume theyre all a matching type
 
-    let joinableTypes = {Array: true, Object: true, boolean: true, string: true, number: true};
-    let items = itemset.filter(i => joinableTypes[i.type]);
+    let joinableTypes = {
+      Array: true,
+      Object: true,
+      boolean: true,
+      string: true,
+      number: true,
+    };
+    let items = itemset.filter((i) => joinableTypes[i.type]);
 
     if (items.length) {
       let type = items[0].type;
-      return joinItems(items.filter(i => i.type === type), type);
+      return joinItems(
+        items.filter((i) => i.type === type),
+        type
+      );
     } else {
       // idk - no items to join?
       return {
-        count: 0
+        count: 0,
       };
     }
-
   }
 
   function joinItems(itemArr, type) {
-    itemArr = itemArr.filter(i => i.type === type);
+    itemArr = itemArr.filter((i) => i.type === type);
 
     // functions to join items by type
     let joiner = {
-      string: function(items) {
+      string: function (items) {
         // string length range
         let min = items.reduce((acc, item) => {
           return Math.min(acc, item.range[0]);
@@ -204,12 +215,12 @@ function summarizeJSON(data, {
           type: "string",
           example: items[0].example,
           range: [min, max],
-          count: items.reduce((a, i) => a + i.count, 0)
+          count: items.reduce((a, i) => a + i.count, 0),
         };
 
         return joinedString;
       },
-      number: function(items) {
+      number: function (items) {
         let min = items.reduce((acc, item) => {
           return Math.min(acc, item.range[0]);
         }, Infinity);
@@ -222,19 +233,19 @@ function summarizeJSON(data, {
           type: "number",
           example: items[0].example,
           range: [min, max],
-          count: items.reduce((a, i) => a + i.count, 0)
+          count: items.reduce((a, i) => a + i.count, 0),
         };
 
         return joinedNumber;
       },
-      boolean: function(items) {
+      boolean: function (items) {
         return {
           type: "boolean",
           example: items[0].example,
-          count: items.reduce((a, i) => a + i.count, 0)
+          count: items.reduce((a, i) => a + i.count, 0),
         };
       },
-      Object: function(items) {
+      Object: function (items) {
         let masterKeys = {};
 
         for (let obj of items) {
@@ -247,7 +258,12 @@ function summarizeJSON(data, {
           }
         }
 
-        let joinedObject = { type: "Object", keys: [], items: {}, count: items.length };
+        let joinedObject = {
+          type: "Object",
+          keys: [],
+          items: {},
+          count: items.length,
+        };
 
         for (let key of Object.keys(masterKeys)) {
           joinedObject.keys.push(key);
@@ -257,24 +273,41 @@ function summarizeJSON(data, {
 
         return joinedObject;
       },
-      Array: function(items) {
-        let joinedValues = joinSampledArray(items.map(i => i.items[0]).filter(i => i));
+      Array: function (items) {
+        let joinedValues = joinSampledArray(
+          items.map((i) => i.items[0]).filter((i) => i)
+        );
 
         let joinedArray = {
           count: items.length,
           items: {
-            0: joinedValues
+            0: joinedValues,
           },
           length: joinedValues.count / items.length,
-          type: "Array"
+          type: "Array",
         };
 
         return joinedArray;
-      }
+      },
     };
 
     return joiner[type](itemArr);
   }
+
+  // function unmarkObject(obj) {
+  //   if (obj && obj["*snippets_mark*"]) {
+  //     delete obj["*snippets_mark*"];
+
+  //     // recurse to the next level
+  //     if (obj instanceof Array && obj.length) {
+  //       unmarkObject(obj[0]);
+  //     } else if (obj instanceof Object) {
+  //       for (let key of Object.keys(obj)) {
+  //         unmarkObject(obj[key]);
+  //       }
+  //     }
+  //   }
+  // }
 
   function unmarkObject(obj) {
     if (obj && obj["*snippets_mark*"]) {
@@ -282,7 +315,7 @@ function summarizeJSON(data, {
 
       // recurse to the next level
       if (obj instanceof Array && obj.length) {
-        unmarkObject(obj[0]);
+        obj.forEach((o) => unmarkObject(o));
       } else if (obj instanceof Object) {
         for (let key of Object.keys(obj)) {
           unmarkObject(obj[key]);
@@ -310,30 +343,34 @@ function printSummarizedJSON(
     indentCount: indentCount$1 = indentCount,
     showExampleValue: showExampleValue$1 = showExampleValue,
     startExpanded: startExpanded$1 = startExpanded,
-    theme: theme$1 = theme
+    theme: theme$1 = theme,
+    asText = false,
   } = defaults
 ) {
   // start at 0 indentation
-  return (
-    `<div class="theme ${theme$1}"><div class='json-summary-wrapper'>` +
-    printSummaryLevel(summary, 0) +
-    `<div></div>`
-  );
-
+  if (asText) {
+    return printSummaryLevel(summary, 0);
+  } else {
+    return (
+      `<div class="theme ${theme$1}"><div class='json-summary-wrapper'>` +
+      printSummaryLevel(summary, 0) +
+      `<div></div>`
+    );
+  }
 
   function printSummaryLevel(data, l) {
     let string = "";
 
     if (data.circular) {
-      string += wrapInHTML("(circular reference)", "circular");
+      string += wrap("(circular reference)", "circular");
     } else if (data.type === "Object") {
       string += "{";
 
-      let keys = data.keys.map(k => `'${k}'`).join(", ");
+      let keys = data.keys.map((k) => `'${k}'`).join(", ");
 
-      string += wrapInHTML(keys, "keys");
+      string += wrap(keys, "keys");
 
-      let childStrings = data.keys.map(key => {
+      let childStrings = data.keys.map((key) => {
         return printSummaryLevel(data.items[key], l + 1);
       });
 
@@ -343,12 +380,19 @@ function printSummarizedJSON(
         for (let i = 0; i < data.keys.length; i++) {
           childStringCombined += indentation$1.repeat((l + 1) * indentCount$1);
 
-          childStringCombined += wrapInHTML(data.keys[i], "name") + ": ";
+          childStringCombined += wrap(data.keys[i], "name") + ": ";
 
           if (data.count > 1) {
-            childStringCombined += htmlPercentageBar(
-              (data.items[data.keys[i]].count / data.count) * 100
-            );
+            if (asText) {
+              childStringCombined +=
+                ((data.items[data.keys[i]].count / data.count) * 100).toFixed(
+                  2
+                ) + "% ";
+            } else {
+              childStringCombined += htmlPercentageBar(
+                (data.items[data.keys[i]].count / data.count) * 100
+              );
+            }
           }
 
           childStringCombined += childStrings[i];
@@ -362,17 +406,17 @@ function printSummarizedJSON(
 
         childStringCombined += indentation$1.repeat(l * indentCount$1);
 
-        string += wrapInHTML(childStringCombined, "child");
+        string += wrap(childStringCombined, "child");
       }
 
       string += "}";
 
-      string = wrapInHTML(string, "layer");
+      string = wrap(string, "layer");
     } else if (data.type === "Array") {
       // string += "[]";
       // string += `[ ${data.length ? `(${data.length}×)` : "∅"} `;
       string +=
-        wrapInHTML(
+        wrap(
           data.count > 1 ? "μ = " + data.length.toFixed(1) : data.length,
           "length"
         ) + ` [`;
@@ -397,20 +441,28 @@ function printSummarizedJSON(
       // string = wrapInHTML(string, "layer");
     } else {
       if (data.example == null || data.example == undefined) {
-        string += wrapInHTML("?", "type");
+        string += wrap("?", "type");
       } else {
-        string += wrapInHTML(data.type, "type");
+        string += wrap(data.type, "type");
       }
 
       if (showExampleValue$1) {
-        string += wrapInHTML(data.example, "value", data.type);
+        string += wrap(data.example, "value", data.type);
         data.count > 1 &&
           data.range &&
-          (string += wrapInHTML(data.range, "range", data.type));
+          (string += wrap(data.range, "range", data.type));
       }
     }
 
     return string;
+  }
+
+  function wrap(value, role, type) {
+    if (asText) {
+      return wrapAsText(value, role);
+    } else {
+      return wrapInHTML(value, role, type);
+    }
   }
 
   function wrapInHTML(value, role, type) {
@@ -420,10 +472,9 @@ function printSummarizedJSON(
       value: () =>
         `<span class="json-summary json-summary-value json-summary-value-${type}">${value}</span>`,
       range: () =>
-        `<span class="json-summary json-summary-range json-summary-range-${type}">[${
-          value[0]
-        }, ${value[1]}]</span>`,
-      name: () => `<span class="json-summary json-summary-name">${value}</span>`,
+        `<span class="json-summary json-summary-range json-summary-range-${type}">[${value[0]}, ${value[1]}]</span>`,
+      name: () =>
+        `<span class="json-summary json-summary-name">${value}</span>`,
       length: () =>
         `<span class="json-summary json-summary-length">(${value})</span>`,
       circular: () =>
@@ -436,11 +487,36 @@ function printSummarizedJSON(
                 me.parentNode.classList.toggle('checked');
               })(this)"></span>
             </span><div class="json-summary json-summary-layer">${value}</div>`,
-      child: () => `<div class="json-summary json-summary-child">${value}</div>`,
-      keys: () => `<span class="json-summary json-summary-keys">${value}</span>`
+      child: () =>
+        `<div class="json-summary json-summary-child">${value}</div>`,
+      keys: () =>
+        `<span class="json-summary json-summary-keys">${value}</span>`,
     };
 
     return tags[role]();
+  }
+
+  function wrapAsText(value, role) {
+    switch (role) {
+      case "type":
+        return `<${value}>`;
+      case "length":
+        return `(${value})`;
+      case "layer":
+        return value;
+      // case "value":
+      // case "keys":
+      // case "range":
+      //   return ` ${type === "string" ? "len:" : "val:"} [${value[0]}, ${
+      //     value[1]
+      //   }]`;
+      case "name":
+      case "child":
+      case "circular":
+        return ` ${value}`;
+      default:
+        return "";
+    }
   }
 
   function htmlPercentageBar(percentage) {
@@ -461,4 +537,4 @@ var index = {
 
 return index;
 
-}));
+})));
