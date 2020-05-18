@@ -176,7 +176,7 @@ function printSummarizedJSON(
       case "type":
         return `<${value}>`;
       case "length":
-        return ` (${value})`;
+        return `(${value})`;
       case "layer":
         return value;
       // case "value":

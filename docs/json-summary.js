@@ -3,7 +3,7 @@
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
 (global = global || self, global.jsonSummary = factory());
-}(this, (function () { 'use strict';
+}(this, function () { 'use strict';
 
 let arraySampleCount = 10,
 indentation = " ", // or "\t"
@@ -13,7 +13,6 @@ startExpanded = false,
 theme = "dark";
 
 var defaults = /*#__PURE__*/Object.freeze({
-__proto__: null,
 arraySampleCount: arraySampleCount,
 indentation: indentation,
 indentCount: indentCount,
@@ -317,7 +316,7 @@ function printSummarizedJSON(
 ) {
   // start at 0 indentation
   if (asText) {
-    printSummaryLevel(summary, 0);
+    return printSummaryLevel(summary, 0);
   } else {
     return (
       `<div class="theme ${theme$1}"><div class='json-summary-wrapper'>` +
@@ -352,10 +351,10 @@ function printSummarizedJSON(
 
           if (data.count > 1) {
             if (asText) {
-              childStringCombined += (
-                (data.items[data.keys[i]].count / data.count) *
-                100
-              ).toFixed(2);
+              childStringCombined +=
+                ((data.items[data.keys[i]].count / data.count) * 100).toFixed(
+                  2
+                ) + "% ";
             } else {
               childStringCombined += htmlPercentageBar(
                 (data.items[data.keys[i]].count / data.count) * 100
@@ -427,7 +426,7 @@ function printSummarizedJSON(
 
   function wrap(value, role, type) {
     if (asText) {
-      return wrapAsText(value, role);
+      return wrapAsText(value, role, type);
     } else {
       return wrapInHTML(value, role, type);
     }
@@ -464,22 +463,26 @@ function printSummarizedJSON(
     return tags[role]();
   }
 
-  function wrapAsText(value, role) {
+  function wrapAsText(value, role, type) {
     switch (role) {
       case "type":
         return `<${value}>`;
       case "length":
         return `(${value})`;
-      case "range":
-        return `[${value[0]}, ${value[1]}]`;
-      case "value":
+      case "layer":
+        return value;
+      // case "value":
+      // case "keys":
+      // case "range":
+      //   return ` ${type === "string" ? "len:" : "val:"} [${value[0]}, ${
+      //     value[1]
+      //   }]`;
       case "name":
       case "child":
-      case "layer":
-      case "keys":
       case "circular":
+        return ` ${value}`;
       default:
-        return `${value}`;
+        return "";
     }
   }
 
@@ -501,4 +504,4 @@ var index = {
 
 return index;
 
-})));
+}));

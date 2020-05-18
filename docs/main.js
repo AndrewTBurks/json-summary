@@ -1,6 +1,6 @@
 /* global jsonSummary, Dropzone */
 
-let globalTheme = "dark"
+let globalTheme = "dark";
 
 let ex1 = {
   name: "val1",
@@ -8,8 +8,8 @@ let ex1 = {
   isOk: true,
   location: {
     x: 1,
-    y: 2
-  }
+    y: 2,
+  },
 };
 
 let ex2 = {
@@ -23,7 +23,7 @@ let ex2 = {
       name: "Molecule Man",
       age: 29,
       secretIdentity: "Dan Jukes",
-      powers: ["Radiation resistance", "Turning tiny", "Radiation blast"]
+      powers: ["Radiation resistance", "Turning tiny", "Radiation blast"],
     },
     {
       name: "Madame Uppercut",
@@ -32,8 +32,8 @@ let ex2 = {
       powers: [
         "Million tonne punch",
         "Damage resistance",
-        "Superhuman reflexes"
-      ]
+        "Superhuman reflexes",
+      ],
     },
     {
       name: "Eternal Flame",
@@ -44,15 +44,15 @@ let ex2 = {
         "Heat Immunity",
         "Inferno",
         "Teleportation",
-        "Interdimensional travel"
-      ]
-    }
-  ]
+        "Interdimensional travel",
+      ],
+    },
+  ],
 };
 
 let ex0 = {
   a: [2, 8, 24],
-  b: { x: "y" }
+  b: { x: "y" },
 };
 
 let summary = jsonSummary.summarize(ex0);
@@ -61,35 +61,42 @@ let outelem0 = document.getElementById("output1");
 sumelem0.innerHTML = JSON.stringify(summary, null, "  ");
 outelem0.innerHTML = jsonSummary.printSummary(summary, {
   startExpanded: true,
-  theme: globalTheme
+  theme: globalTheme,
 });
 
 addExample(ex1, 2);
 addExample(ex2, 3);
 
-function addExample(data, number) {
+addExample(ex2, 4, true);
+
+function addExample(data, number, asText = false) {
   let summary = jsonSummary.summarize(data);
 
   let dataelem = document.getElementById("data" + number);
   let outelem = document.getElementById("output" + number);
 
   dataelem.innerHTML = JSON.stringify(data, null, "  ");
-  outelem.innerHTML = jsonSummary.printSummary(summary, {
+
+  let summaryString = jsonSummary.printSummary(summary, {
     startExpanded: true,
-    theme: globalTheme
+    theme: globalTheme,
+    asText,
   });
+
+  outelem.innerHTML = asText
+    ? summaryString.replace(/</gm, "&lt;").replace(/>/gm, "&gt;")
+    : summaryString;
 }
 
 Dropzone.options.upload = {
   url: "#",
   maxFiles: 1,
   acceptedFiles: "application/json",
-  accept: function(file) {
-
+  accept: function (file) {
     var reader = new FileReader();
     reader.readAsText(file, "UTF-8");
 
-    reader.onload = function(evt) {
+    reader.onload = function (evt) {
       try {
         let data = JSON.parse(evt.target.result);
 
@@ -99,7 +106,7 @@ Dropzone.options.upload = {
 
         outElem.innerHTML = jsonSummary.printSummary(summary, {
           startExpanded: false,
-          theme: globalTheme
+          theme: globalTheme,
         });
       } catch (err) {
         throw err;
@@ -108,14 +115,14 @@ Dropzone.options.upload = {
     // reader.onerror = function(evt) {
     //   console.log("error reading file");
     // };
-  }
+  },
 };
 
 // bind interaction with data blocks
 let dataBlocks = document.getElementsByClassName("data");
 
 for (let i = 0; i < dataBlocks.length; i++) {
-  dataBlocks[i].onclick = function() {
+  dataBlocks[i].onclick = function () {
     this.classList.toggle("open");
   };
 }
@@ -123,7 +130,7 @@ for (let i = 0; i < dataBlocks.length; i++) {
 let themeChoices = document.getElementsByClassName("themeChoice");
 
 for (let i = 0; i < themeChoices.length; i++) {
-  themeChoices[i].onclick = function(e) {
+  themeChoices[i].onclick = function (e) {
     e.stopPropagation();
     let themeBlocks = document.getElementsByClassName("theme");
     let codeBlocks = document.getElementsByClassName("code");
@@ -147,6 +154,6 @@ for (let i = 0; i < themeChoices.length; i++) {
   };
 }
 
-document.getElementById("themePanel").onclick = function() {
+document.getElementById("themePanel").onclick = function () {
   this.classList.toggle("open");
 };
