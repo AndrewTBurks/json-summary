@@ -1,9 +1,9 @@
-// https://andrewtburks.dev/json-summary v1.1.0 Copyright 2019 Andrew Burks
+// https://andrewtburks.dev/json-summary v1.1.0 Copyright 2020 Andrew Burks
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
 (global = global || self, global.jsonSummary = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
 let arraySampleCount = 10,
 indentation = " ", // or "\t"
@@ -13,6 +13,7 @@ startExpanded = false,
 theme = "dark";
 
 var defaults = /*#__PURE__*/Object.freeze({
+__proto__: null,
 arraySampleCount: arraySampleCount,
 indentation: indentation,
 indentCount: indentCount,
@@ -310,30 +311,34 @@ function printSummarizedJSON(
     indentCount: indentCount$1 = indentCount,
     showExampleValue: showExampleValue$1 = showExampleValue,
     startExpanded: startExpanded$1 = startExpanded,
-    theme: theme$1 = theme
+    theme: theme$1 = theme,
+    asText = false,
   } = defaults
 ) {
   // start at 0 indentation
-  return (
-    `<div class="theme ${theme$1}"><div class='json-summary-wrapper'>` +
-    printSummaryLevel(summary, 0) +
-    `<div></div>`
-  );
-
+  if (asText) {
+    printSummaryLevel(summary, 0);
+  } else {
+    return (
+      `<div class="theme ${theme$1}"><div class='json-summary-wrapper'>` +
+      printSummaryLevel(summary, 0) +
+      `<div></div>`
+    );
+  }
 
   function printSummaryLevel(data, l) {
     let string = "";
 
     if (data.circular) {
-      string += wrapInHTML("(circular reference)", "circular");
+      string += wrap("(circular reference)", "circular");
     } else if (data.type === "Object") {
       string += "{";
 
-      let keys = data.keys.map(k => `'${k}'`).join(", ");
+      let keys = data.keys.map((k) => `'${k}'`).join(", ");
 
-      string += wrapInHTML(keys, "keys");
+      string += wrap(keys, "keys");
 
-      let childStrings = data.keys.map(key => {
+      let childStrings = data.keys.map((key) => {
         return printSummaryLevel(data.items[key], l + 1);
       });
 
@@ -343,12 +348,19 @@ function printSummarizedJSON(
         for (let i = 0; i < data.keys.length; i++) {
           childStringCombined += indentation$1.repeat((l + 1) * indentCount$1);
 
-          childStringCombined += wrapInHTML(data.keys[i], "name") + ": ";
+          childStringCombined += wrap(data.keys[i], "name") + ": ";
 
           if (data.count > 1) {
-            childStringCombined += htmlPercentageBar(
-              (data.items[data.keys[i]].count / data.count) * 100
-            );
+            if (asText) {
+              childStringCombined += (
+                (data.items[data.keys[i]].count / data.count) *
+                100
+              ).toFixed(2);
+            } else {
+              childStringCombined += htmlPercentageBar(
+                (data.items[data.keys[i]].count / data.count) * 100
+              );
+            }
           }
 
           childStringCombined += childStrings[i];
@@ -362,17 +374,17 @@ function printSummarizedJSON(
 
         childStringCombined += indentation$1.repeat(l * indentCount$1);
 
-        string += wrapInHTML(childStringCombined, "child");
+        string += wrap(childStringCombined, "child");
       }
 
       string += "}";
 
-      string = wrapInHTML(string, "layer");
+      string = wrap(string, "layer");
     } else if (data.type === "Array") {
       // string += "[]";
       // string += `[ ${data.length ? `(${data.length}×)` : "∅"} `;
       string +=
-        wrapInHTML(
+        wrap(
           data.count > 1 ? "μ = " + data.length.toFixed(1) : data.length,
           "length"
         ) + ` [`;
@@ -397,20 +409,28 @@ function printSummarizedJSON(
       // string = wrapInHTML(string, "layer");
     } else {
       if (data.example == null || data.example == undefined) {
-        string += wrapInHTML("?", "type");
+        string += wrap("?", "type");
       } else {
-        string += wrapInHTML(data.type, "type");
+        string += wrap(data.type, "type");
       }
 
       if (showExampleValue$1) {
-        string += wrapInHTML(data.example, "value", data.type);
+        string += wrap(data.example, "value", data.type);
         data.count > 1 &&
           data.range &&
-          (string += wrapInHTML(data.range, "range", data.type));
+          (string += wrap(data.range, "range", data.type));
       }
     }
 
     return string;
+  }
+
+  function wrap(value, role, type) {
+    if (asText) {
+      return wrapAsText(value, role);
+    } else {
+      return wrapInHTML(value, role, type);
+    }
   }
 
   function wrapInHTML(value, role, type) {
@@ -420,10 +440,9 @@ function printSummarizedJSON(
       value: () =>
         `<span class="json-summary json-summary-value json-summary-value-${type}">${value}</span>`,
       range: () =>
-        `<span class="json-summary json-summary-range json-summary-range-${type}">[${
-          value[0]
-        }, ${value[1]}]</span>`,
-      name: () => `<span class="json-summary json-summary-name">${value}</span>`,
+        `<span class="json-summary json-summary-range json-summary-range-${type}">[${value[0]}, ${value[1]}]</span>`,
+      name: () =>
+        `<span class="json-summary json-summary-name">${value}</span>`,
       length: () =>
         `<span class="json-summary json-summary-length">(${value})</span>`,
       circular: () =>
@@ -436,11 +455,32 @@ function printSummarizedJSON(
                 me.parentNode.classList.toggle('checked');
               })(this)"></span>
             </span><div class="json-summary json-summary-layer">${value}</div>`,
-      child: () => `<div class="json-summary json-summary-child">${value}</div>`,
-      keys: () => `<span class="json-summary json-summary-keys">${value}</span>`
+      child: () =>
+        `<div class="json-summary json-summary-child">${value}</div>`,
+      keys: () =>
+        `<span class="json-summary json-summary-keys">${value}</span>`,
     };
 
     return tags[role]();
+  }
+
+  function wrapAsText(value, role) {
+    switch (role) {
+      case "type":
+        return `<${value}>`;
+      case "length":
+        return `(${value})`;
+      case "range":
+        return `[${value[0]}, ${value[1]}]`;
+      case "value":
+      case "name":
+      case "child":
+      case "layer":
+      case "keys":
+      case "circular":
+      default:
+        return `${value}`;
+    }
   }
 
   function htmlPercentageBar(percentage) {
@@ -461,4 +501,4 @@ var index = {
 
 return index;
 
-}));
+})));
