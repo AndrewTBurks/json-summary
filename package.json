@@ -48,7 +48,7 @@
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.1",
     "rollup-plugin-terser": "^4.0.4",
-    "sass": "^1.18.0"
+    "sass": "^1.26.5"
   },
   "jest": {
     "transform": {
