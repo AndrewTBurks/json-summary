@@ -177,14 +177,14 @@ function printSummarizedJSON(
         return `<${value}>`;
       case "length":
         return ` (${value})`;
-      case "range":
-        return ` ${type === "string" ? "len:" : "val:"} [${value[0]}, ${
-          value[1]
-        }]`;
       case "layer":
         return value;
       // case "value":
       // case "keys":
+      // case "range":
+      //   return ` ${type === "string" ? "len:" : "val:"} [${value[0]}, ${
+      //     value[1]
+      //   }]`;
       case "name":
       case "child":
       case "circular":
