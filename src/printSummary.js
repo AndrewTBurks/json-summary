@@ -171,7 +171,7 @@ function printSummarizedJSON(
     return tags[role]();
   }
 
-  function wrapAsText(value, role, type) {
+  function wrapAsText(value, role) {
     switch (role) {
       case "type":
         return `<${value}>`;

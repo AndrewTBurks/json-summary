@@ -83,6 +83,8 @@ function addExample(data, number, asText = false) {
     asText,
   });
 
+  console.log(summary);
+
   outelem.innerHTML = asText
     ? summaryString.replace(/</gm, "&lt;").replace(/>/gm, "&gt;")
     : summaryString;

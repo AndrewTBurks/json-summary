@@ -348,6 +348,8 @@ test("can output text string", () => {
 
   let text = JsonSummary.printSummary(summary, { asText: true });
 
+  console.log(text);
+
   expect(text).not.toBeNull();
   expect(text).toBeDefined();
 });
