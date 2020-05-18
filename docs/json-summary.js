@@ -3,7 +3,7 @@
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
 (global = global || self, global.jsonSummary = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
 let arraySampleCount = 10,
 indentation = " ", // or "\t"
@@ -13,6 +13,7 @@ startExpanded = false,
 theme = "dark";
 
 var defaults = /*#__PURE__*/Object.freeze({
+__proto__: null,
 arraySampleCount: arraySampleCount,
 indentation: indentation,
 indentCount: indentCount,
@@ -458,7 +459,7 @@ function printSummarizedJSON(
 
   function wrap(value, role, type) {
     if (asText) {
-      return wrapAsText(value, role, type);
+      return wrapAsText(value, role);
     } else {
       return wrapInHTML(value, role, type);
     }
@@ -536,4 +537,4 @@ var index = {
 
 return index;
 
-}));
+})));
