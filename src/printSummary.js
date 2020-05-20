@@ -20,11 +20,17 @@ function printSummarizedJSON(
     startExpanded = defaultPrintOpt.startExpanded,
     theme = defaultPrintOpt.theme,
     asText = false,
+    asJson = false,
   } = defaultPrintOpt
 ) {
+  const sep = asText ? "" : ", ";
+  let wasArray, prevLevel = 0;
+
   // start at 0 indentation
   if (asText) {
     return printSummaryLevel(summary, 0);
+  } else if (asJson) {
+    return JSON.parse(printSummaryLevel(summary, 0));
   } else {
     return (
       `<div class="theme ${theme}"><div class='json-summary-wrapper'>` +
@@ -39,12 +45,13 @@ function printSummarizedJSON(
     if (data.circular) {
       string += wrap("(circular reference)", "circular");
     } else if (data.type === "Object") {
-      string += "{";
+      if (!asText) string += "{";
 
-      let keys = data.keys.map((k) => `'${k}'`).join(", ");
+      let keys = data.keys.map((k) => `'${k}'`).join(sep);
 
       string += wrap(keys, "keys");
 
+      if (l === prevLevel) wasArray = false;
       let childStrings = data.keys.map((key) => {
         return printSummaryLevel(data.items[key], l + 1);
       });
@@ -58,22 +65,19 @@ function printSummarizedJSON(
           childStringCombined += wrap(data.keys[i], "name") + ": ";
 
           if (data.count > 1) {
-            if (asText) {
-              childStringCombined +=
-                ((data.items[data.keys[i]].count / data.count) * 100).toFixed(
-                  2
-                ) + "% ";
+            let pct = ((data.items[data.keys[i]].count / data.count) * 100).toFixed(2);
+            if (asJson) childStringCombined += '"';
+            if (asText || asJson) {
+              childStringCombined += pct + "% ";
             } else {
-              childStringCombined += htmlPercentageBar(
-                (data.items[data.keys[i]].count / data.count) * 100
-              );
+              childStringCombined += htmlPercentageBar(pct);
             }
           }
 
           childStringCombined += childStrings[i];
 
           if (i < data.keys.length - 1) {
-            childStringCombined += ",";
+            childStringCombined += sep;
           }
 
           childStringCombined += "\n";
@@ -84,24 +88,32 @@ function printSummarizedJSON(
         string += wrap(childStringCombined, "child");
       }
 
-      string += "}";
+      if (!asText) string += "}";
 
       string = wrap(string, "layer");
     } else if (data.type === "Array") {
       // string += "[]";
       // string += `[ ${data.length ? `(${data.length}×)` : "∅"} `;
-      string +=
+      let needsNewlines = data.length && (
+        data.items["0"].type === "Object" || data.items["0"].type === "Array"
+      );
+      let lenStr =
         wrap(
           data.count > 1 ? "μ = " + data.length.toFixed(1) : data.length,
           "length"
-        ) + ` [`;
+        ) + (!asJson ? ` [` : "");
 
+      if (!needsNewlines || !asJson) string += lenStr;
       if (data.length) {
-        let needsNewlines =
-          data.items["0"].type === "Object" || data.items["0"].type === "Array";
-
-        if (needsNewlines) {
-          string += "\n" + indentation.repeat((l + 1) * indentCount);
+        if (needsNewlines && asJson) {
+          data.items["0"].items['<summary>'] = {
+            type: "array",
+            example: lenStr.replace(/"/, ""),
+            keys: [],
+            items: {},
+            count: data.items["0"].keys.length,
+          };
+          data.items["0"].keys.unshift('<summary>');
         }
 
         string += printSummaryLevel(data.items["0"], l + 1, data.count);
@@ -111,7 +123,7 @@ function printSummarizedJSON(
         }
       }
 
-      string += "]";
+      if (!asJson) string += "]";
 
       // string = wrapInHTML(string, "layer");
     } else {
@@ -122,19 +134,23 @@ function printSummarizedJSON(
       }
 
       if (showExampleValue) {
-        string += wrap(data.example, "value", data.type);
+        string += wrap(data.example, "example", data.type);
         data.count > 1 &&
           data.range &&
           (string += wrap(data.range, "range", data.type));
       }
+      // if (l !== prevLevel) wasArray = false;
     }
 
+    prevLevel = l;
     return string;
   }
 
   function wrap(value, role, type) {
     if (asText) {
       return wrapAsText(value, role, type);
+    } else if (asJson) {
+      return wrapAsJson(value, role, type);
     } else {
       return wrapInHTML(value, role, type);
     }
@@ -168,6 +184,7 @@ function printSummarizedJSON(
         `<span class="json-summary json-summary-keys">${value}</span>`,
     };
 
+    tags.example = tags.value;
     return tags[role]();
   }
 
@@ -179,12 +196,13 @@ function printSummarizedJSON(
         return `(${value})`;
       case "layer":
         return value;
-      // case "value":
       // case "keys":
       // case "range":
       //   return ` ${type === "string" ? "len:" : "val:"} [${value[0]}, ${
       //     value[1]
       //   }]`;
+      case "value":
+      case "example":
       case "name":
       case "child":
       case "circular":
@@ -194,10 +212,31 @@ function printSummarizedJSON(
     }
   }
 
+  function wrapAsJson(value, role) {
+    const startSep = wasArray ? " " : '"';
+    const endSep = showExampleValue ? " " : '"';
+    switch (role) {
+      case "example":
+        return `${value}"`;
+      case "type":
+        return `${startSep}<${value}>${endSep}`;
+      case "length":
+        wasArray = true;
+        return `"(${value})`;
+      case "layer":
+      case "value":
+      case "child":
+        return value;
+      case "name":
+      case "circular":
+        return ` "${value}"`;
+      default:
+        return "";
+    }
+  }
+
   function htmlPercentageBar(percentage) {
-    return `<div class="json-summary json-summary-bar" title="${percentage.toFixed(
-      2
-    )}%"><div class="json-summary json-summary-percentage" style="width:${percentage}%;"></div></div>`;
+    return `<div class="json-summary json-summary-bar" title="${percentage}%"><div class="json-summary json-summary-percentage" style="width:${percentage}%;"></div></div>`;
   }
 }
 

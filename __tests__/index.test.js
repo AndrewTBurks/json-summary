@@ -353,3 +353,20 @@ test("can output text string", () => {
   expect(text).not.toBeNull();
   expect(text).toBeDefined();
 });
+
+test("can output json string", () => {
+  let object = testData;
+
+  object.f.w = object;
+
+  let summary = JsonSummary.summarize(object);
+
+  let obj = JsonSummary.printSummary(summary, { asJson: true });
+
+  console.log(obj);
+
+  expect(obj).not.toBeNull();
+  expect(obj).toBeDefined();
+  expect(Object.keys(obj)).toEqual(Object.keys(testData));
+  expect(obj.g['<summary>']).toBeDefined();
+});

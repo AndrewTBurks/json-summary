@@ -19,7 +19,7 @@
     "index.js"
   ],
   "scripts": {
-    "lint": "eslint -c .eslintrc.json 'index.js' 'src/**'",
+    "lint": "eslint -c .eslintrc.json index.js src/**",
     "jest": "jest",
     "test": "npm run lint && jest --coverage --coverageReporters=text-lcov | coveralls",
     "prepublish": "npm run build && npm test",
