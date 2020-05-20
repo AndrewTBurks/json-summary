@@ -9,11 +9,13 @@
     "summary"
   ],
   "main": "dist/json-summary-node.js",
+  "bin": "bin/cli.js",
   "module": "index.js",
   "browser": "dist/json-summary.js",
   "browserMin": "dist/json-summary.min.js",
   "files": [
     "/dist",
+    "/bin",
     "index.js"
   ],
   "scripts": {
