@@ -31,7 +31,6 @@ function printSummarizedJSON(
   if (asText) {
     return printSummaryLevel(summary, 0);
   } else if (asJson) {
-    let printed = printSummaryLevel(summary, 0);
     return JSON.parse(printSummaryLevel(summary, 0));
   } else {
     return (
