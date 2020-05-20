@@ -1,4 +1,4 @@
-// https://andrewtburks.dev/json-summary v1.2.0 Copyright 2020 Andrew Burks
+// https://andrewtburks.dev/json-summary v1.3.0 Copyright 2020 Andrew Burks
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 typeof define === 'function' && define.amd ? define(factory) :
@@ -356,7 +356,6 @@ function printSummarizedJSON(
   if (asText) {
     return printSummaryLevel(summary, 0);
   } else if (asJson) {
-    let printed = printSummaryLevel(summary, 0);
     return JSON.parse(printSummaryLevel(summary, 0));
   } else {
     return (
