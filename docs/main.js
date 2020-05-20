@@ -68,8 +68,9 @@ addExample(ex1, 2);
 addExample(ex2, 3);
 
 addExample(ex2, 4, true);
+addExample(ex2, 5, false, true);
 
-function addExample(data, number, asText = false) {
+function addExample(data, number, asText = false, asJson = false) {
   let summary = jsonSummary.summarize(data);
 
   let dataelem = document.getElementById("data" + number);
@@ -81,13 +82,16 @@ function addExample(data, number, asText = false) {
     startExpanded: true,
     theme: globalTheme,
     asText,
+    asJson,
   });
 
   console.log(summary);
+  asJson && (summaryString = JSON.stringify(summaryString, undefined, 2));
 
-  outelem.innerHTML = asText
-    ? summaryString.replace(/</gm, "&lt;").replace(/>/gm, "&gt;")
-    : summaryString;
+  outelem.innerHTML =
+    asText || asJson
+      ? summaryString.replace(/</gm, "&lt;").replace(/>/gm, "&gt;")
+      : summaryString;
 }
 
 Dropzone.options.upload = {

@@ -5,6 +5,7 @@ import JsonSummary from "../index";
 import { JSDOM } from "jsdom";
 
 import testData from "./testdata.json";
+import testDataTwo from "./testdata2.json";
 
 // let summarizerNoSample = new JsonSummary({arraySampleCount: 0});
 // let summarizerSampled = new JsonSummary({ arraySampleCount: 5 });
@@ -348,8 +349,6 @@ test("can output text string", () => {
 
   let text = JsonSummary.printSummary(summary, { asText: true });
 
-  console.log(text);
-
   expect(text).not.toBeNull();
   expect(text).toBeDefined();
 });
@@ -363,10 +362,46 @@ test("can output json string", () => {
 
   let obj = JsonSummary.printSummary(summary, { asJson: true });
 
-  console.log(obj);
-
   expect(obj).not.toBeNull();
   expect(obj).toBeDefined();
   expect(Object.keys(obj)).toEqual(Object.keys(testData));
-  expect(obj.g['<summary>']).toBeDefined();
+  expect(obj.g["<summary>"]).toBeDefined();
+});
+
+test("can output html string (sampling)", () => {
+  let object = testDataTwo;
+
+  let summary = JsonSummary.summarize(object);
+
+  let frag = JSDOM.fragment(JsonSummary.printSummary(summary));
+
+  // has a theme
+  expect(frag.querySelector(".theme")).not.toBeNull();
+
+  // has a json-summary-wrapper
+  expect(frag.querySelector(".json-summary-wrapper")).not.toBeNull();
+});
+
+test("can output text string (sampling)", () => {
+  let object = testDataTwo;
+
+  let summary = JsonSummary.summarize(object);
+
+  let text = JsonSummary.printSummary(summary, { asText: true });
+
+  expect(text).not.toBeNull();
+  expect(text).toBeDefined();
+});
+
+test("can output json string (sampling)", () => {
+  let object = testDataTwo;
+
+  let summary = JsonSummary.summarize(object);
+
+  let obj = JsonSummary.printSummary(summary, { asJson: true });
+
+  expect(obj).not.toBeNull();
+  expect(obj).toBeDefined();
+  expect(Object.keys(obj)).toEqual(Object.keys(object));
+  expect(obj.members["<summary>"]).toBeDefined();
 });

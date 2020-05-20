@@ -24,12 +24,14 @@ function printSummarizedJSON(
   } = defaultPrintOpt
 ) {
   const sep = asText ? "" : ", ";
-  let wasArray, prevLevel = 0;
+  let wasArray,
+    prevLevel = 0;
 
   // start at 0 indentation
   if (asText) {
     return printSummaryLevel(summary, 0);
   } else if (asJson) {
+    let printed = printSummaryLevel(summary, 0);
     return JSON.parse(printSummaryLevel(summary, 0));
   } else {
     return (
@@ -65,7 +67,10 @@ function printSummarizedJSON(
           childStringCombined += wrap(data.keys[i], "name") + ": ";
 
           if (data.count > 1) {
-            let pct = ((data.items[data.keys[i]].count / data.count) * 100).toFixed(2);
+            let pct = (
+              (data.items[data.keys[i]].count / data.count) *
+              100
+            ).toFixed(2);
             if (asJson) childStringCombined += '"';
             if (asText || asJson) {
               childStringCombined += pct + "% ";
@@ -94,26 +99,28 @@ function printSummarizedJSON(
     } else if (data.type === "Array") {
       // string += "[]";
       // string += `[ ${data.length ? `(${data.length}×)` : "∅"} `;
-      let needsNewlines = data.length && (
-        data.items["0"].type === "Object" || data.items["0"].type === "Array"
-      );
+      let needsNewlines =
+        data.length &&
+        (data.items["0"].type === "Object" || data.items["0"].type === "Array");
       let lenStr =
         wrap(
           data.count > 1 ? "μ = " + data.length.toFixed(1) : data.length,
           "length"
         ) + (!asJson ? ` [` : "");
 
+      if (data.count > 1) lenStr = lenStr.slice(1); // don't put leading quote on the 'mu' =  expression
+
       if (!needsNewlines || !asJson) string += lenStr;
       if (data.length) {
         if (needsNewlines && asJson) {
-          data.items["0"].items['<summary>'] = {
+          data.items["0"].items["<summary>"] = {
             type: "array",
             example: lenStr.replace(/"/, ""),
             keys: [],
             items: {},
-            count: data.items["0"].keys.length,
+            count: data.items["0"].count,
           };
-          data.items["0"].keys.unshift('<summary>');
+          data.items["0"].keys.unshift("<summary>");
         }
 
         string += printSummaryLevel(data.items["0"], l + 1, data.count);
