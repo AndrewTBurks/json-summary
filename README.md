@@ -10,5 +10,3 @@
 A simple JSON summarizer to extract the structure from a JSON object.
 
 Live documentation can be found at: https://observablehq.com/@andrewtburks/json-summary
-
-Alternatively, usage and examples can be seen at: https://andrewtburks.dev/json-summary
